@@ -1,45 +1,42 @@
-import React, { Component } from 'react';
-import {AppRegistry, Image, Text, StyleSheet, View, BackgroundImage } from 'react-native';
+import adminNav from './views/Admin';
+import trainerNav from './views/Trainer';
 
-const remote = 'https://i.stack.imgur.com/6d1kC.jpg';
-
-export default class DefaultApp extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.viewBox}>
-          <Image style={styles.container}
-            source={{ uri: remote }}
-          />
-        </View>
-        
-        <View style={styles.homeStyle}>
-          <Text style={styles.textBox}>FIThaca</Text>
-        </View>
-      </View>
-    );
-  }
-}
-
-AppRegistry.registerComponent('BackgroundImage', () => BackgroundImage);
+export default adminNav;
+//export default trainerNav;
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  homeStyle:{
-    flex: 1, 
-    justifyContent: 'center'
-  },
-  textBox:{
-    fontFamily:'Chalkduster',
-    textAlign: 'center', 
-    fontSize: 40
-  },
-  viewBox:{
-    position: 'absolute', 
-    width: '100%', 
-    height: '100%'
-  }
-});
+
+/*
+list of screens
+
+admin:
+    home tab:
+        home
+        reports
+    trainer tab: 
+        trainer list
+        trainer info
+        add trainer
+    client tab:
+        client list (admin)
+        client info (admin)
+        add client
+        add package
+
+trainer:
+    session tab:
+        home
+        past sessions
+    client tab:
+        client list (trainer)
+        client info (trainer)
+        past client sessions
+        add/edit session
+
+shared:
+    package info 
+    package sessions
+    session info
+
+
+*/
