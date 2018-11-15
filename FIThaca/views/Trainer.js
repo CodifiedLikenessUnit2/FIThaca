@@ -50,7 +50,7 @@ const ClientStack = createStackNavigator(
         PackageSessions: PackageSessionsScreen,
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Clients',
         navigationOptions: {
             headerStyle: {
                 //backgroundColor: 'blue',
