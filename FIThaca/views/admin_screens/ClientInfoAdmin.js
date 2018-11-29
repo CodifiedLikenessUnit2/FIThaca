@@ -49,7 +49,10 @@ export default class ClientInfoScreenAdmin extends React.Component {
         return (
             <View style={styles.container}>  
                 <Text>{this.state.name}{'\n'}{this.state.type}{'\n'}{this.state.contact}</Text>
-                <Text>Current Package: {'\n'}{this.state.current_package}</Text>
+                <Text>Current Package: {'\n'}</Text>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.current_package})} underlayColor="blue">
+                    <Text>{this.state.current_package}</Text>
+                </TouchableHighlight>
                 <FlatList data={this.state.past_packages} renderItem={this._renderItem}/>
                 <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {client: this.state.name})}/>
             </View>
