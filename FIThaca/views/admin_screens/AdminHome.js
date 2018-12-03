@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-
+import { Button } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class AdminHomeScreen extends React.Component {
@@ -11,7 +11,19 @@ export default class AdminHomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}> 
-                <Text>Admin Home</Text>
+                <Text>Home</Text>
+                {'\n'}
+                {'\n'}
+                {'\n'}
+                <Text>Welcome</Text>
+                {'\n'}
+                {'\n'}
+                <Button
+                     onPress = {this.props.navigation.navigate('Reports')}
+                       title = "Reports"
+                       color = "blue"
+               />
+
             </View>
         );
     }
