@@ -8,10 +8,20 @@ export default class PastClientSessionsScreen extends React.Component {
         title: 'Past Sessions',
     };
 
+	constructor(props){
+    super(props);
+    this.state = {data};
+  }
+
     render() {
         return (
             <View style={styles.container}>  
                 <Text>Past Client Sessions</Text>
+            <Button
+          title="Go Back"
+          onPress={() => this.props.navigation.goBack()}
+        />
+<Text>this.state.data</>
             </View>
         );
     }
