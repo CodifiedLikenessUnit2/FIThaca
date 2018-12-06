@@ -7,11 +7,24 @@ export default class PastClientsScreen extends React.Component {
     static navigationOptions = {
         title: 'Past Clients',
     };
+constructor(props){
+    super(props);
+    this.state = {key};
+  }
 
     render() {
         return (
             <View style={styles.container}>  
                 <Text>Past Clients</Text>
+            <Text>this.state.data</Text>
+            <Button
+          title="Go to Client Session Screen"
+          onPress={() => this.props.navigation.navigate(PastClientSessionsScreen:{key:""})}
+        />
+		<Button
+          title="Go Back"
+          onPress={() => this.props.navigation.goBack()}
+        />
             </View>
         );
     }
