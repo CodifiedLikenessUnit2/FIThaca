@@ -23,7 +23,7 @@ constructor(props){
 				onPress={() => this.props.navigation.goBack()}/>
 				<Button
           title="Go to Client Session Screen"
-          onPress={() => this.props.navigation.navigate(PastClients:{key:""})}
+          onPress={() => this.props.navigation.navigate(PastClients:{key:})}
         />
             </View>
         );
