@@ -7,11 +7,16 @@ export default class AddEditSessionScreen extends React.Component {
     static navigationOptions = {
         title: 'Edit Session',
     };
+constructor(props){
+    super(props);
+    this.state = {data};
+  }
 
     render() {
         return (
             <View style={styles.container}>  
                 <Text>Add/Edit Session</Text>
+		<Text>Session List{this.state.data}</Text>
             <Button
           title="Go Back"
           onPress={() => this.props.navigation.goBack()}
