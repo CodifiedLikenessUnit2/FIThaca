@@ -12,6 +12,18 @@ export default class AddEditSessionScreen extends React.Component {
         return (
             <View style={styles.container}>  
                 <Text>Add/Edit Session</Text>
+            <Button
+          title="Go Back"
+          onPress={() => this.props.navigation.goBack()}
+        />
+		<Button
+          title="Add Session"
+          onPress={() => ()}
+        />
+		<Button
+          title="Edit Session"
+          onPress={() => ()}
+        />
             </View>
         );
     }
