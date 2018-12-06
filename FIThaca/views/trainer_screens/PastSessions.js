@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-
+import trainerNav from '../..views/Trainer.js';
+import ClientStack from '../..views/Trainer.js';
+import SessionStack from '../..views/Trainer.js';
 import styles from '../../styles/styles';
 
 export default class PastSessionsScreen extends React.Component {
