@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 import styles from '../../styles/styles';
+import trainerNav from '../..views/Trainer.js';
+import ClientStack from '../..views/Trainer.js';
+import SessionStack from '../..views/Trainer.js';
+
 
 export default class AddEditSessionScreen extends React.Component {
     static navigationOptions = {
