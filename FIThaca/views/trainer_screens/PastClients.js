@@ -21,7 +21,7 @@ constructor(props){
             <Text>this.state.data</Text>
             <Button
           title="Go to Client Session Screen"
-          onPress={() => this.props.navigation.navigate('PastClients',{key:""})}
+          onPress={() => this.props.navigation.navigate('PastClients',{key:})}
         />
 		<Button
           title="Go Back"
