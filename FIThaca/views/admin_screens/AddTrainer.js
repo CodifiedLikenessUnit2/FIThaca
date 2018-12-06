@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -27,7 +27,7 @@ export default class AddTrainerScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>  
+            <View style={styles.container}>
                 <TextInput onChangeText={(first) => this.setState({first})} placeholder={'First Name'}/>
                 <TextInput onChangeText={(last) => this.setState({last})} placeholder={'Last Name'}/>
                 <TextInput onChangeText={(email) => this.setState({email})} placeholder={'Email Address'}/>
@@ -35,7 +35,7 @@ export default class AddTrainerScreen extends React.Component {
 
 
                 <Button title='Add Trainer' onPress={this._addTrainer}/>
-                <Button title='Cancel' onPress={()=>this.props.navigation.navigate('Trainers')}/>
+                <Button title='Cancel' onPress={() => this.props.navigation.navigate('Trainers')}/>
             </View>
         );
     }
