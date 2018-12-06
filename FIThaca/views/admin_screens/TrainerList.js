@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList, Button } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -20,12 +20,12 @@ export default class TrainerListScreen extends React.Component {
             {key: '5', name: 'No One'},
             {key: '6', name: 'Bob'},
             {key: '7', name: 'Evil Person'},
-            {key: '8', name: 'No One'} 
+            {key: '8', name: 'No One'}
         ]};
 
         const willFocusSubscription = this.props.navigation.addListener(
             'willFocus',
-            this._updateList 
+            this._updateList
         );
     }
 
@@ -38,14 +38,14 @@ export default class TrainerListScreen extends React.Component {
             <View>
                 <TouchableHighlight onPress={()=>this.props.navigation.navigate('TraingerInfo', {name: data.item.name})} underlayColor="blue">
 		            <Text style={styles.row}>{data.item.name}</Text>
-		        </TouchableHighlight> 
+		        </TouchableHighlight>
             </View>
         );
     };
 
     render() {
         return (
-            <View style={styles.container}> 
+            <View style={styles.container}>
                 <FlatList data={this.state.clients} renderItem={this._renderItem}/>
                 <Button title='Add Trainer' onPress={()=>this.props.navigation.navigate('AddTrainer')}/>
             </View>

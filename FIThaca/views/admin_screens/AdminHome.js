@@ -10,16 +10,11 @@ export default class AdminHomeScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}> 
+            <View style={styles.container}>
                 <Text>Home</Text>
-                {'\n'}
-                {'\n'}
-                {'\n'}
                 <Text>Welcome</Text>
-                {'\n'}
-                {'\n'}
                 <Button
-                     onPress = {this.props.navigation.navigate('Reports')}
+                     onPress = {() => this.props.navigation.navigate('Reports')}
                        title = "Reports"
                        color = "blue"
                />

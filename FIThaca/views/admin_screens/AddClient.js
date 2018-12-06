@@ -28,7 +28,7 @@ export default class AddClientScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>  
+            <View style={styles.container}>
                 <TextInput onChangeText={(first) => this.setState({first})} placeholder={'First Name'}/>
                 <TextInput onChangeText={(last) => this.setState({last})} placeholder={'Last Name'}/>
                 <TextInput onChangeText={(email) => this.setState({email})} placeholder={'Email Address'}/>
@@ -42,7 +42,7 @@ export default class AddClientScreen extends React.Component {
                 </Picker>
 
                 <Button title='Add Client' onPress={this._addClient}/>
-                <Button title='Cancel' onPress={()=>this.props.navigation.navigate('Clients')}/>
+                <Button title='Cancel' onPress={() => this.props.navigation.navigate('Clients')}/>
             </View>
         );
     }

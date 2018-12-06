@@ -12,7 +12,7 @@ export default class ClientInfoScreenAdmin extends React.Component {
         super(props);
 
         const name = this.props.navigation.getParam('name', 'NO-NAME');
-       
+
         //query database for actual client information
         this.state = {
             name: name,
@@ -20,14 +20,14 @@ export default class ClientInfoScreenAdmin extends React.Component {
             contact: 'contact_info',
             current_package: 'package_identifier',
             past_packages: [
-                {key: '1', id: 'past_package_identifier'}, 
+                {key: '1', id: 'past_package_identifier'},
                 {key: '2', id: 'past_package_identifier_2'}
             ]
         };
 
         const willFocusSubscription = this.props.navigation.addListener(
             'willFocus',
-            this._updatePackages 
+            this._updatePackages
         );
     }
 
@@ -40,21 +40,21 @@ export default class ClientInfoScreenAdmin extends React.Component {
             <View>
                 <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: data.item.id})} underlayColor="blue">
 		            <Text style={styles.row}>{data.item.id}</Text>
-		        </TouchableHighlight> 
+		        </TouchableHighlight>
             </View>
         );
     };
 
     render() {
         return (
-            <View style={styles.container}>  
+            <View style={styles.container}>
                 <Text>{this.state.name}{'\n'}{this.state.type}{'\n'}{this.state.contact}</Text>
                 <Text>Current Package: {'\n'}</Text>
                 <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.current_package})} underlayColor="blue">
                     <Text>{this.state.current_package}</Text>
                 </TouchableHighlight>
                 <FlatList data={this.state.past_packages} renderItem={this._renderItem}/>
-                <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {client: this.state.name})}/>
+                <Button title='Add Package' onPress={() => this.props.navigation.navigate('AddPackage', {client: this.state.name})}/>
             </View>
         );
     }

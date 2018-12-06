@@ -17,12 +17,12 @@ export default class ClientListScreen extends React.Component {
             {key: '2', name: 'client_two'},
             {key: '3', name: 'client_three'},
             {key: '4', name: 'client_four'},
-            {key: '5', name: 'client_five'} 
+            {key: '5', name: 'client_five'}
         ]};
 
         const willFocusSubscription = this.props.navigation.addListener(
             'willFocus',
-            this._updateList 
+            this._updateList
         );
     }
 
@@ -33,18 +33,18 @@ export default class ClientListScreen extends React.Component {
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoA', {name: data.item.name})} underlayColor="blue">
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('ClientInfoA', {name: data.item.name})} underlayColor="blue">
 		            <Text style={styles.row}>{data.item.name}</Text>
-		        </TouchableHighlight> 
+		        </TouchableHighlight>
             </View>
         );
     };
 
     render() {
         return (
-            <View style={styles.container}> 
+            <View style={styles.container}>
                 <FlatList data={this.state.clients} renderItem={this._renderItem}/>
-                <Button title='Add Client' onPress={()=>this.props.navigation.navigate('AddClient')}/>
+                <Button title='Add Client' onPress={() => this.props.navigation.navigate('AddClient')}/>
             </View>
         );
     }
