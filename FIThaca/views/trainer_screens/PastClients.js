@@ -11,7 +11,7 @@ export default class PastClientsScreen extends React.Component {
     };
 constructor(props){
     super(props);
-    this.state = {key};
+    this.state = {data};
   }
 
     render() {
