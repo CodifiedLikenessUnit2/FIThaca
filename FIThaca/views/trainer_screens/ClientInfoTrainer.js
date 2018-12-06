@@ -12,6 +12,15 @@ export default class ClientInfoScreenTrainer extends React.Component {
         return (
             <View style={styles.container}>  
                 <Text>Client Info Trainer</Text>
+            	<Button
+          title="Go Back"
+          onPress={() => this.props.navigation.goBack()}
+        />
+            
+			<Button
+          title="Get Info"
+          onPress={() => ()}
+        />
             </View>
         );
     }
