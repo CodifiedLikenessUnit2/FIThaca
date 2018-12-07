@@ -1,8 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import trainerNav from '../..views/Trainer.js';
-import ClientStack from '../..views/Trainer.js';
-import SessionStack from '../..views/Trainer.js';
+import { View, Text, Button } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class PastClientsScreen extends React.Component {
@@ -11,17 +8,17 @@ export default class PastClientsScreen extends React.Component {
     };
 constructor(props){
     super(props);
-    this.state = {data};
+    this.state = {};
   }
 
     render() {
         return (
-            <View style={styles.container}>  
+            <View style={styles.container}>
                 <Text>Past Clients</Text>
-            <Text>this.state.data</Text>
+            <Text>{this.state.data}</Text>
             <Button
           title="Go to Client Session Screen"
-          onPress={() => this.props.navigation.navigate('PastClients',{key:})}
+          onPress={() => this.props.navigation.navigate('PastClients')}
         />
 		<Button
           title="Go Back"
