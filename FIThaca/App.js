@@ -1,8 +1,8 @@
 import adminNav from './views/Admin';
 import trainerNav from './views/Trainer';
 
-export default adminNav;
-//export default trainerNav;
+//export default adminNav;
+export default trainerNav;
 
 
 

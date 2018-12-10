@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Picker } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class AddEditSessionScreen extends React.Component {
@@ -9,28 +9,23 @@ export default class AddEditSessionScreen extends React.Component {
     };
 
     constructor(props){
-      super(props);
-      this.state = {
-        client: client,
-        time: time,
-        complete: false,
+        super(props);
+        this.state = {
+            client: 'session_client',
+            time: 'session_time',
+            trainer: 'session_trainer',
+            complete: false,
 
-        //this would come from the database - be hardcoded in from the login account because we are going to know who the trainer is based on their login 
-        trainer: '',
-
-        //these lists should come from the database
-        trainers: ['trainer_one', 'trainer_two', 'trainer_three'],
-        clients: ['client_one', 'client_two', 'client_three']
+            //these lists should come from the database
+            trainers: ['trainer_one', 'trainer_two', 'trainer_three'],
+            clients: ['client_one', 'client_two', 'client_three']
+        }   
     }
-}
 
 
-_saveSession = () => {
+    _saveSession = () => {
 
-    //We should probably check the time they enter and compare it with the current time. If it already passed, we 
-    //should send an alert telling the user they messed up
-
-    //add this or save changes to database - we don't have that in here just yet
+        //add this or save changes to database - we don't have that in here just yet
 
         Alert.alert('session saved');
 
@@ -54,6 +49,11 @@ _saveSession = () => {
 
     render() {
 
+        // <DatePickerIOS
+        //      date={this.state.chosenDate}
+        //      onDateChange={this.setDate}
+        // />
+
         let trainers = this.state.trainers.map( (trainer, i) => {
             return <Picker.Item key={i} value={trainer} label={trainer} />
         });
@@ -61,6 +61,22 @@ _saveSession = () => {
         let clients = this.state.clients.map( (client, i) => {
             return <Picker.Item key={i} value={client} label={client} />
         });
+
+        // //I hope this is like a real thing
+        // <view>
+        // if(this.state.complete == false){
+        //     <view>
+        //     <text>Session Still Pending</text>
+        //     <Button title='Complete' onPress={()=>this.setComplete}/>
+        //     </view>
+        // }
+        // else{
+        //     <view>
+        //     <text>Session Complete</text>
+        //     <Button title='Set Active Again' onPress={()=>this.setInComplete}/>
+        //     </view>
+        // }
+        // </view>
 
         return (
             <View style={styles.container}>  
@@ -84,26 +100,6 @@ _saveSession = () => {
                         <Picker.Item key='6' label="Trainer F" value="10p" />
                 </Picker>
 
-                <DatePickerIOS
-                     date={this.state.chosenDate}
-                     onDateChange={this.setDate}
-                />
-
-                //I hope this is like a real thing
-                <view>
-                if(this.state.complete == false){
-                    <view>
-                    <text>Session Still Pending</text>
-                    <Button title='Complete' onPress={()=>this.setComplete}/>
-                    </view>
-                }
-                else{
-                    <view>
-                    <text>Session Complete</text>
-                    <Button title='Set Active Again' onPress={()=>this.setInComplete}/>
-                    </view>
-                }
-                </view>
 
                 <Button title='Save Session' onPress={this._saveSession}/>
                 <Button title='Cancel' onPress={()=>this.props.navigation.navigate('ClientInfoA')}/>

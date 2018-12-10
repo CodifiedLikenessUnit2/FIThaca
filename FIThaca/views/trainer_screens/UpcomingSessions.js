@@ -1,64 +1,57 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class UpcomingSessionsScreen extends React.Component {
     static navigationOptions = {
         title: 'Sessions',
     };
-constructor(props){
-    super(props);
+    constructor(props){
+        super(props);
 
-    this.state = {upcomingSessions: [
-        {key: '1', client: 'Frank', time: 'Some random time'},
-        {key: '2', client: 'Harry', time: 'Some random time'},
-        {key: '3', client: 'Billy', time: 'Some random time'},
-        {key: '4', client: 'Meg', time: 'Some random time'},
-        {key: '5', client: 'Pax', time: 'Some random time'},
-        {key: '6', client: 'Kate', time: 'Some random time'},
-        {key: '7', client: 'Mike', time: 'Some random time'},
-        {key: '8', client: 'Ryan', time: 'Some random time'},
-    ],
-    PastSessions: [
-        {key: '1', client: 'Frank', time: 'Some random time'},
-        {key: '2', client: 'Harry', time: 'Some random time'},
-        {key: '3', client: 'Billy', time: 'Some random time'},
-        {key: '4', client: 'Meg', time: 'Some random time'},
-        {key: '5', client: 'Pax', time: 'Some random time'},
-        {key: '6', client: 'Kate', time: 'Some random time'},
-        {key: '7', client: 'Mike', time: 'Some random time'},
-        {key: '8', client: 'Ryan', time: 'Some random time'},
-    ]
+        this.state = {
+            next: 'next_session',
+            sessions: [
+                {key: '1', session: 'session_one'},
+                {key: '2', session: 'session_two'},
+                {key: '3', session: 'session_three'},
+                {key: '4', session: 'session_four'},
+                {key: '5', session: 'session_five'} 
+            ],
+        };
+    }
 
-};
-  }
+    _renderItem = data => {
+        return (
+            <View>
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: data.item.name})} underlayColor="blue">
+                    <Text style={styles.row}>
+                        <Text>data.item.client{'\n'}</Text>
+                        <Text>data.item.time</Text>
+                    </Text>
+                </TouchableHighlight>
+            </View>
+        );
+    };
 
     render() {
         return (
             <View style={styles.container}>
                 <Text>Home</Text>
                 <Text>Next Session</Text>
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: this.state.next.session})} underlayColor="blue">
+                    <Text style={styles.row}>
+                        <Text>next_session.clientName{'\n'}</Text>
+                        <Text>next_session.time</Text>
+                    </Text>
+                </TouchableHighlight>
 
                 <Text>Upcoming Sessions</Text>
+                <FlatList data={this.state.sessions} renderItem={this._renderItem}/>
 
-                //this is coming from the database
-                <Text>Name of the next client</Text>
-                <Text>Date of the next session</Text>
-
-//this would take from the database
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TraingerInfo', {name: upcomingSessions.item.client})} underlayColor="blue">
-                <Text style={styles.row}>{data.item.client}</Text>
-                <Text style={styles.row}>{data.item.time}</Text>
-                </TouchableHighlight>
-
-                <Text>Past Sessions</Text>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TraingerInfo', {name: PastSessions.item.client})} underlayColor="blue">
-                <Text style={styles.row}>{data.item.client}</Text>
-                <Text style={styles.row}>{data.item.time}</Text>
-                </TouchableHighlight>
             <Button
 				title="Create a New Session"
-				onPress={() => this.props.navigation.navigate('AddEditSession')}
+				onPress={() => this.props.navigation.navigate('EditSession')}
 					/>
             </View>
         );

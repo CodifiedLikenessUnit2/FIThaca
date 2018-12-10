@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class TrainerClientsScreen extends React.Component {
@@ -32,7 +32,7 @@ _updateList = () => {
 _renderItem = data => {
     return (
         <View>
-            <TouchableHighlight onPress={()=>this.props.navigation.navigate('TraingerInfo', {name: data.item.name})} underlayColor="blue">
+            <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.name})} underlayColor="blue">
                 <Text style={styles.row}>{data.item.name}</Text>
             </TouchableHighlight>
         </View>
@@ -42,11 +42,8 @@ _renderItem = data => {
 render() {
     return (
         <View style={styles.container}>
-        <Button
-				title="Go Back"
-				onPress={() => this.props.navigation.goBack()}/>
-            <FlatList data={this.state.clients} renderItem={this._renderItem}/>
-            </View>
+            <FlatList data={this.state.trainers} renderItem={this._renderItem}/>
+        </View>
         );
     }
 }

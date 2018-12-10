@@ -33,7 +33,7 @@ export default class PastClientSessionsScreen extends React.Component {
                 onPress={() => this.props.navigation.goBack()}
                 />
               <Text>Past Sessions</Text>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TraingerInfo', {name: PastSessions.item.client})} underlayColor="blue">
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TrainerInfo', {name: PastSessions.item.client})} underlayColor="blue">
                 <Text style={styles.row}>{data.item.time}</Text>
                 </TouchableHighlight>
             </View>

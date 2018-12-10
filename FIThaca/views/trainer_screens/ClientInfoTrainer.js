@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TouchableHighlight, FlatList } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class ClientInfoScreenTrainer extends React.Component {
@@ -9,6 +9,8 @@ export default class ClientInfoScreenTrainer extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const name = this.props.navigation.getParam('name', 'NO-NAME');
 
         //query database for actual client information
         this.state = {
@@ -45,14 +47,6 @@ return (
 render() {
 return (
     <View style={styles.container}>
-    <Text>Client Info Trainer</Text>
-            	<Button
-          title="Go Back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-
-//this part might be glitchy - hopefully not
-
         <Text>{this.state.name}{'\n'}{this.state.type}{'\n'}{this.state.contact}</Text>
         <FlatList data={this.state.past_packages} renderItem={this._renderItem}/>
     </View>
