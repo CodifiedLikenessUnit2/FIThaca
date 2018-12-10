@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Picker } from 'react-native';
+import { View, Text, Button, Picker, Alert } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class AddEditSessionScreen extends React.Component {
@@ -80,24 +80,24 @@ export default class AddEditSessionScreen extends React.Component {
 
         return (
             <View style={styles.container}>  
-             <Text>Add/Edit Session</Text>
-              <Text>Session List: {this.state.data}</Text>
 
-
-              <Button
-                title="Go Back"
-                onPress={() => this.props.navigation.goBack()}
-                />
-
-//We are probably going to have to tweak this later on. I am envisioning a picker that displays the clients from the database
-                <Picker selectedValue={this.state.client} style={{ height: 10, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
+                //We are probably going to have to tweak this later on. I am envisioning a picker that displays the clients from the database
+                <Picker selectedValue={this.state.client} style={{ height: 20, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
                     onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
-                        <Picker.Item key='1' label="Trainer A" value="4i" />
-                        <Picker.Item key='2' label="Trainer B" value="7i" />
-                        <Picker.Item key='3' label="Trainer C" value="10i" />
-                        <Picker.Item key='4' label="Trainer D" value="4p" />
-                        <Picker.Item key='5' label="Trainer E" value="7p" />
-                        <Picker.Item key='6' label="Trainer F" value="10p" />
+                        <Picker.Item key='1' label="Client A" value="a" />
+                        <Picker.Item key='2' label="Client B" value="b" />
+                        <Picker.Item key='3' label="Client C" value="c" />
+                        <Picker.Item key='4' label="Client D" value="d" />
+                        <Picker.Item key='5' label="Client E" value="e" />
+                        <Picker.Item key='6' label="Client F" value="f" />
+                </Picker>
+
+
+                <Picker selectedValue={this.state.client} style={{ height: 20, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
+                    onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
+                        <Picker.Item key='1' label="Upcoming" value="4i" />
+                        <Picker.Item key='2' label="In Progress" value="7i" />
+                        <Picker.Item key='3' label="Complete" value="10i" />
                 </Picker>
 
 
