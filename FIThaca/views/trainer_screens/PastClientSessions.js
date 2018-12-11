@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class PastClientSessionsScreen extends React.Component {
@@ -9,33 +9,38 @@ export default class PastClientSessionsScreen extends React.Component {
 
 	constructor(props){
         super(props);
+
+        const name = this.props.navigation.getParam('name', 'NO-NAME');
     
         //So the thing with this is that this gets all the session history for one client using the database
-        this.state = {PastSessions: [
-            {key: '1', time: 'Some random time'},
-            {key: '2', time: 'Some random time'},
-            {key: '3', time: 'Some random time'},
-            {key: '4', time: 'Some random time'},
-            {key: '5', time: 'Some random time'},
-            {key: '6', time: 'Some random time'},
-            {key: '7', time: 'Some random time'},
-            {key: '8', time: 'Some random time'},
+        this.state = {sessions: [
+            {key: '1', session: 'session_one'},
+            {key: '2', session: 'session_two'},
+            {key: '3', session: 'session_three'},
+            {key: '4', session: 'session_four'},
+            {key: '5', session: 'session_five'} 
         ]};
     }
+
+    _renderItem = data => {
+        return (
+            <View>
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: data.item.session, admin: false})} underlayColor="blue">
+                    <Text style={styles.row}>
+                        <Text>data.item.client{'\n'}</Text>
+                        <Text>data.item.time</Text>
+                    </Text>
+                </TouchableHighlight>
+            </View>
+        );
+    };
 
 
     render() {
         return (
             <View style={styles.container}>
-              <Text>Past Client Sessions</Text>
-              <Button
-                title="Go Back"
-                onPress={() => this.props.navigation.goBack()}
-                />
-              <Text>Past Sessions</Text>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TrainerInfo', {name: PastSessions.item.client})} underlayColor="blue">
-                <Text style={styles.row}>{data.item.time}</Text>
-                </TouchableHighlight>
+                <Text>Past Sessions</Text>
+                <FlatList data={this.state.sessions} renderItem={this._renderItem}/>
             </View>
         );
     }

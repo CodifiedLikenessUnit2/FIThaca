@@ -43,6 +43,7 @@ render() {
     return (
         <View style={styles.container}>
             <FlatList data={this.state.trainers} renderItem={this._renderItem}/>
+            <Button title='Past Clients' onPress={() => this.props.navigation.navigate('PastClients')}/>
         </View>
         );
     }

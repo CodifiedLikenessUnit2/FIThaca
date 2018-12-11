@@ -18,9 +18,9 @@ export default class ClientInfoScreenTrainer extends React.Component {
             type: 'client_type',
             contact: 'contact_info',
             current_package: 'package_identifier',
-            past_packages: [
-                {key: '1', id: 'past_package_identifier'},
-                {key: '2', id: 'past_package_identifier_2'}
+            sessions: [
+                {key: '1', id: 'session_identifier'},
+                {key: '2', id: 'session_identifier_2'}
             ]
         };
 
@@ -47,8 +47,13 @@ return (
 render() {
 return (
     <View style={styles.container}>
-        <Text>{this.state.name}{'\n'}{this.state.type}{'\n'}{this.state.contact}</Text>
-        <FlatList data={this.state.past_packages} renderItem={this._renderItem}/>
+        <Text>{this.state.name}</Text>
+        <Text>{this.state.type}</Text>
+        <Text>{this.state.contact}</Text>
+        <Text>Number of Sessions Remaining: n/a</Text>
+        <Text>Upcoming Sessions:</Text>
+        <FlatList data={this.state.sessions} renderItem={this._renderItem}/>
+        <Button title='Past Sessions' onPress={() => this.props.navigation.navigate('ClientPastSessions', {client: this.state.name})}/>
     </View>
 );
 }

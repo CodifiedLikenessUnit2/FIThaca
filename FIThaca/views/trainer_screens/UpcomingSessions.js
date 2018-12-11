@@ -9,6 +9,9 @@ export default class UpcomingSessionsScreen extends React.Component {
     constructor(props){
         super(props);
 
+        //this may have to be adjusted based on the database but right now it assumes that the sessions contain session identifiers of some sort
+        //and you would grab the client name and time of the session based on that identifier
+        //it's kind of a mess right now 
         this.state = {
             next: 'next_session',
             sessions: [
@@ -24,7 +27,7 @@ export default class UpcomingSessionsScreen extends React.Component {
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: data.item.name})} underlayColor="blue">
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: data.item.session, admin: false})} underlayColor="blue">
                     <Text style={styles.row}>
                         <Text>data.item.client{'\n'}</Text>
                         <Text>data.item.time</Text>
@@ -39,7 +42,7 @@ export default class UpcomingSessionsScreen extends React.Component {
             <View style={styles.container}>
                 <Text>Home</Text>
                 <Text>Next Session</Text>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: this.state.next.session})} underlayColor="blue">
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: this.state.next.session, admin: false})} underlayColor="blue">
                     <Text style={styles.row}>
                         <Text>next_session.clientName{'\n'}</Text>
                         <Text>next_session.time</Text>
@@ -49,10 +52,15 @@ export default class UpcomingSessionsScreen extends React.Component {
                 <Text>Upcoming Sessions</Text>
                 <FlatList data={this.state.sessions} renderItem={this._renderItem}/>
 
-            <Button
-				title="Create a New Session"
-				onPress={() => this.props.navigation.navigate('EditSession')}
-					/>
+                <Button
+                    title="Past Sessions"
+                    onPress={() => this.props.navigation.navigate('PastSessions')}
+                />
+
+                <Button
+                    title="Create a New Session"
+                    onPress={() => this.props.navigation.navigate('EditSession')}
+                />
             </View>
         );
     }
