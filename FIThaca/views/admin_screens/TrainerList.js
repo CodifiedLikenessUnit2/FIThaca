@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Button } from 'react-native';
+import { View, Text, FlatList, Button, TouchableHighlight } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -36,7 +36,7 @@ export default class TrainerListScreen extends React.Component {
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TraingerInfo', {name: data.item.name})} underlayColor="blue">
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TrainerInfo', {name: data.item.name})} underlayColor="#EDBB00">
 		            <Text style={styles.row}>{data.item.name}</Text>
 		        </TouchableHighlight>
             </View>
@@ -46,7 +46,7 @@ export default class TrainerListScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <FlatList data={this.state.clients} renderItem={this._renderItem}/>
+                <FlatList data={this.state.trainers} renderItem={this._renderItem}/>
                 <Button title='Add Trainer' onPress={()=>this.props.navigation.navigate('AddTrainer')}/>
             </View>
         );
