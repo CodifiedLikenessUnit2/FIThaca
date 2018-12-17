@@ -29,12 +29,12 @@ export default class AddClientScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput onChangeText={(first) => this.setState({first})} placeholder={'First Name'}/>
-                <TextInput onChangeText={(last) => this.setState({last})} placeholder={'Last Name'}/>
-                <TextInput onChangeText={(email) => this.setState({email})} placeholder={'Email Address'}/>
-                <TextInput onChangeText={(phone) => this.setState({phone})} placeholder={'Phone Number'}/>
+                <TextInput style={styles.input} onChangeText={(first) => this.setState({first})} placeholder={'First Name'}/>
+                <TextInput style={styles.input} onChangeText={(last) => this.setState({last})} placeholder={'Last Name'}/>
+                <TextInput style={styles.input} onChangeText={(email) => this.setState({email})} placeholder={'Email Address'}/>
+                <TextInput style={styles.input} onChangeText={(phone) => this.setState({phone})} placeholder={'Phone Number'}/>
 
-                <Picker selectedValue={this.state.type} style={{ height: 10, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
+                <Picker selectedValue={this.state.type} style={styles.picker} itemStyle={styles.item}
                     onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
                         <Picker.Item label="Student" value="Student" />
                         <Picker.Item label="Faculty" value="Faculty" />

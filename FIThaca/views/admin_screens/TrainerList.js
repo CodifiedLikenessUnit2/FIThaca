@@ -35,7 +35,7 @@ export default class TrainerListScreen extends React.Component {
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TrainerInfo', {name: data.item.name})} underlayColor="blue">
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('TrainerInfo', {id: data.item.userID})} underlayColor="#EDBB00">
 		            <Text style={styles.row}>{data.item.name}</Text>
 		        </TouchableHighlight>
             </View>

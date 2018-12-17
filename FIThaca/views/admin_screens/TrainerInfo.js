@@ -11,50 +11,95 @@ export default class TrainerInfoScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        const name = this.props.navigation.getParam('name', 'NO-NAME');
-       
+        const trainerID = this.props.navigation.getParam('id', 'NO-ID');
+
         //query database for actual trainer information
         this.state = {
-            name: name,
-            type: 'Enter Trainer Name',
-            contact: 'Enter Contact Information',
-            current_package: ' the package identifier',
-            past_packages: [
-                {key: '1', id: 'past_package_identifier'}, 
-                {key: '2', id: 'past_package_identifier_2'}
-            ]
+            id: trainerID,
+            trainer: {},
+            current_clients: [],
+            past_clients: []
         };
 
         const willFocusSubscription = this.props.navigation.addListener(
             'willFocus',
-            this._updatePackages 
+            this._updateClients
         );
     }
 
-    _updatePackages = () => {
+    _updateClients = () => {
         //get packages from database
+
+        var postHeaders = new Headers(); 
+        postHeaders.append("Content-Type", "application/json");
+        var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetUser.php';
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(this.state.id),
+            headers: postHeaders,
+        })
+        .then((response) => response.json()) 
+        .then((responseJson) => {
+            this.setState({ trainer: responseJson[0],}); 
+        })
+        .catch((error) =>{
+            console.error(error); 
+        }); 
+
+        url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php';
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(this.state.id),
+            headers: postHeaders,
+        })
+        .then((response) => response.json()) 
+        .then((responseJson) => {
+            this.setState({ current_clients: responseJson,}); 
+        })
+        .catch((error) =>{
+            console.error(error); 
+        });  
+        
+        url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php';
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(this.state.id),
+            headers: postHeaders,
+        })
+        .then((response) => response.json()) 
+        .then((responseJson) => {
+            this.setState({ past_clients: responseJson,}); 
+        })
+        .catch((error) =>{
+            console.error(error); 
+        });   
+         
     }
 
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: data.item.id})} underlayColor="blue">
-		            <Text style={styles.row}>{data.item.id}</Text>
-		        </TouchableHighlight> 
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('ClientInfoA', {id: data.item.clientID})} underlayColor="#EDBB00">
+		            <Text style={styles.row}>{data.item.clientName}</Text>
+		        </TouchableHighlight>
             </View>
         );
     };
 
     render() {
         return (
-            <View style={styles.container}>  
-                <Text>{this.state.name}{'\n'}{this.state.type}{'\n'}{this.state.contact}</Text>
-                <Text>Current Package: {'\n'}</Text>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.current_package})} underlayColor="blue">
-                    <Text>{this.state.current_package}</Text>
-                </TouchableHighlight>
-                <FlatList data={this.state.past_packages} renderItem={this._renderItem}/>
-                <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {trainer: this.state.name})}/>
+            <View style={styles.container}>
+                <Text style={styles.contentHeader}>{this.state.name}</Text>
+                <Text style={styles.text}>{this.state.trainer.name}</Text>
+                <Text style={styles.text}>{this.state.trainer.contactInfo}</Text>
+                <Text style={styles.text}>{this.state.trainer.username}</Text>
+                <Text style={styles.contentHeader}>Current Clients:</Text>
+                <FlatList data={this.state.current_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
+                <Text style={styles.contentHeader}>Past Clients:</Text>
+                <FlatList data={this.state.past_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
             </View>
         );
     }
