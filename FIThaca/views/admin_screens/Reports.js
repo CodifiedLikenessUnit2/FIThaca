@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList, TouchableHighlight } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -15,18 +15,18 @@ export default class ReportsScreen extends React.Component {
 
         //I actually don't think this part will be necessary
         //but if we decide to keep this, the actual information will come from the database
-        this.state = {
-            date: 'date',
-            time: 'time',
-            trainer: 'trainer',
-            ClientFirst: 'ClientFirst',
-            ClientLast: 'ClientLast',
-            ClientType: 'ClientType',
-            ClientGender: 'ClientGender',
-            PackageType: 'PackageType',
-            //I was unsure how to write this, but we can discuss that later
-            PastPackages: 'PastPackages',
-        };
+        this.state = { data: [
+          {key: '1', name: 'date'},
+          {key: '2', name: 'time'},
+          {key: '3', name: 'trainer'},
+          {key: '4', name: 'ClientFirst'},
+          {key: '5', name: 'ClientLast'},
+          {key: '6', name: 'ClientType'},
+          {key: '7', name: 'ClientGender'},
+          {key: '8', name: 'PackageType'},
+          //I was unsure how to write this, but we can discuss that later
+          {key: '9', name: 'PastPackages'},
+        ]};
 
         const willFocusSubscription = this.props.navigation.addListener(
             'willFocus',
@@ -35,23 +35,24 @@ export default class ReportsScreen extends React.Component {
     }
 
     _updatePackages = () => {
-        //get packages from database
+        //fetch data from database
     }
+
+    _renderItem = data => {
+        return (
+            <View>
+                <TouchableHighlight underlayColor="#EDBB00">
+		            <Text style={styles.row}>{data.item.name}</Text>
+		        </TouchableHighlight>
+            </View>
+        );
+    };
 
     render() {
         return (
-            <View>
-
-            <Text> </Text>
-            <Text style={styles.row}>{this.state.date}</Text>
-            <Text style={styles.row}>{this.state.time}</Text>
-            <Text style={styles.row}>{this.state.trainer}</Text>
-            <Text style={styles.row}>{this.state.ClientFirst}</Text>
-            <Text style={styles.row}>{this.state.ClientLast}</Text>
-            <Text style={styles.row}>{this.state.ClientType}</Text>
-            <Text style={styles.row}>{this.state.ClientGender}</Text>
-            <Text style={styles.row}>{this.state.PackageType}</Text>
-        </View>
+          <View style={styles.container}>
+            <FlatList data={this.state.data} renderItem={this._renderItem}/>
+          </View>
         );
     }
 }

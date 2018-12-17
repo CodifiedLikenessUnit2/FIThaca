@@ -28,14 +28,11 @@ export default class AddTrainerScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput onChangeText={(first) => this.setState({first})} placeholder={'First Name'}/>
-                <TextInput onChangeText={(last) => this.setState({last})} placeholder={'Last Name'}/>
-                <TextInput onChangeText={(email) => this.setState({email})} placeholder={'Email Address'}/>
-                <TextInput onChangeText={(phone) => this.setState({phone})} placeholder={'Phone Number'}/>
-
-
+                <TextInput style={styles.input} onChangeText={(first) => this.setState({first})} placeholder={'First Name'}/>
+                <TextInput style={styles.input} onChangeText={(last) => this.setState({last})} placeholder={'Last Name'}/>
+                <TextInput style={styles.input} onChangeText={(email) => this.setState({email})} placeholder={'Email Address'}/>
+                <TextInput style={styles.input} onChangeText={(phone) => this.setState({phone})} placeholder={'Phone Number'}/>
                 <Button title='Add Trainer' onPress={this._addTrainer}/>
-                <Button title='Cancel' onPress={() => this.props.navigation.navigate('Trainers')}/>
             </View>
         );
     }

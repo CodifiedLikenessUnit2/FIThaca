@@ -33,7 +33,7 @@ export default class ClientListScreen extends React.Component {
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('ClientInfoA', {name: data.item.name})} underlayColor="blue">
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('ClientInfoA', {name: data.item.name})} underlayColor="#EDBB00">
 		            <Text style={styles.row}>{data.item.name}</Text>
 		        </TouchableHighlight>
             </View>

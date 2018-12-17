@@ -42,10 +42,10 @@ export default class AddPackageScreen extends React.Component {
         });
 
         return (
-            <View style={styles.container}>  
-                <Text>Client: {this.state.client} </Text>
+            <View style={styles.container}>
+                <Text style={styles.contentHeader}>Client: {this.state.client} </Text>
 
-                <Picker selectedValue={this.state.type} style={{ height: 10, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
+                <Picker selectedValue={this.state.type} style={styles.picker} itemStyle={styles.item}
                     onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
                         <Picker.Item key='1' label="4 Session Individual" value="4i" />
                         <Picker.Item key='2' label="7 Session Individual" value="7i" />
@@ -55,12 +55,12 @@ export default class AddPackageScreen extends React.Component {
                         <Picker.Item key='6' label="10 Session Partnered" value="10p" />
                 </Picker>
 
-                <Picker selectedValue={this.state.partner} style={{ height: 10, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
+                <Picker selectedValue={this.state.partner} style={styles.picker} itemStyle={styles.item}
                     onValueChange={(itemValue, itemIndex) => this.setState({partner: itemValue})}>
                         {clients}
                 </Picker>
 
-                <Picker selectedValue={this.state.trainer} style={{ height: 10, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
+                <Picker selectedValue={this.state.trainer} style={styles.picker} itemStyle={styles.item}
                     onValueChange={(itemValue, itemIndex) => this.setState({trainer: itemValue})}>
                         {trainers}
                 </Picker>
