@@ -32,16 +32,23 @@ export default class ClientInfoScreenAdmin extends React.Component {
         var postHeaders = new Headers(); 
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetClient.php';
+        var data = {clientID: this.state.id};
 
         fetch(url, {
             method: 'POST', 
-            body: JSON.stringify(this.state.id),
+            body: JSON.stringify(data),
             headers: postHeaders,
         })
         .then((response) => response.json()) 
         .then((responseJson) => {
             this.setState({ client: responseJson[0] }); 
+            console.log(this.state.id);
+            console.log(this.state.client);
 
+            if (this.state.client.currPackage == null) {
+                this.setState({ current_package: {type:'No'} });
+                return;
+            }
 
             url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageInfo.php';
             var data = {currPackage: this.state.client.currPackage};
@@ -62,38 +69,6 @@ export default class ClientInfoScreenAdmin extends React.Component {
         .catch((error) =>{
             Alert.alert('Error:'+ error);
         }); 
-
-        
-
-        // url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php';
-
-        // fetch(url, {
-        //     method: 'POST', 
-        //     body: JSON.stringify(this.state.id),
-        //     headers: postHeaders,
-        // })
-        // .then((response) => response.json()) 
-        // .then((responseJson) => {
-        //     this.setState({ current_clients: responseJson,}); 
-        // })
-        // .catch((error) =>{
-        //     console.error(error); 
-        // });  
-        
-        // url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php';
-
-        // fetch(url, {
-        //     method: 'POST', 
-        //     body: JSON.stringify(this.state.id),
-        //     headers: postHeaders,
-        // })
-        // .then((response) => response.json()) 
-        // .then((responseJson) => {
-        //     this.setState({ past_clients: responseJson,}); 
-        // })
-        // .catch((error) =>{
-        //     console.error(error); 
-        // });   
     }
 
     _renderItem = data => {
@@ -112,13 +87,13 @@ export default class ClientInfoScreenAdmin extends React.Component {
               <Text style={styles.contentHeader}>{this.state.client.clientName}</Text>
               <Text style={styles.text}>{this.state.client.clientType}</Text>
               <Text style={styles.text}>{this.state.client.contactInfo}</Text>
-              <Text style={styles.text}>Trainer: {this.state.client.name}</Text>
-              <Text style={styles.contentHeader}>Current Package: {'\n'}</Text>
+              
+              <Text style={styles.contentHeader}>Current Package:</Text>
               <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.client.currPackage})} underlayColor="#EDBB00">
-                  <Text>{this.state.current_package.type} Sessions</Text>
+                  <Text style={styles.text}>{this.state.current_package.type} Sessions</Text>
               </TouchableHighlight>
               <FlatList style={{margin: 20}} data={this.state.past_packages} renderItem={this._renderItem}/>
-              <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {client: this.state.name})}/>
+              <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {client: this.state.client.clientName, id: this.state.id})}/>
           </View>
         );
     }

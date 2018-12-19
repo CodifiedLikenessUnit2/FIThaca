@@ -34,13 +34,12 @@ export default class PackageSessionsScreen extends React.Component {
 
         fetch(url, {
             method: 'POST', 
-            body: JSON.stringify(this.state.id),
+            body: JSON.stringify(data),
             headers: postHeaders,
         })
         .then((response) => response.json()) 
         .then((responseJson) => {
             this.setState({ sessions: responseJson }); 
-            console.log(this.state.sessions);
         })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
@@ -52,7 +51,7 @@ export default class PackageSessionsScreen extends React.Component {
         return (
             <View>
                 <TouchableHighlight onPress={() => this.props.navigation.navigate('SessionInfo', {id: data.item.sessionID, admin: true})} underlayColor="blue">
-		            <Text style={styles.row}>ID: {data.item.sessionID}</Text>
+		            <Text style={styles.row}>{data.item.time}</Text>
 		        </TouchableHighlight> 
             </View>
         );

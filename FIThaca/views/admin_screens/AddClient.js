@@ -12,21 +12,21 @@ export default class AddClientScreen extends React.Component {
         super(props);
 
         this.state = {
-            name: '',
-            phone: '',
-            type: ''
+            clientName: '',
+            contactInfo: '',
+            clientType: 'student',
         }
     }
 
     _addClient = () => {
-        if (this.state.name == '' || this.state.phone == '' || this.state.type == ''){
+        if (this.state.clientName == '' || this.state.contactInfo == '' || this.state.clientType == ''){
             Alert.alert("Please fill out all fields");
             return;
         }
         else {
             var postHeaders = new Headers(); 
             postHeaders.append("Content-Type", "application/json");
-            var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newUser.php';
+            var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newClient.php';
     
             fetch(url, {
                 method: 'POST', 
@@ -40,22 +40,20 @@ export default class AddClientScreen extends React.Component {
             .catch((error) =>{
                 Alert.alert('Error:'+ error);
             }); 
-
-           
         }
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <TextInput style={styles.input} onChangeText={(name) => this.setState({name})} placeholder={'Name'}/>
-                <TextInput style={styles.input} onChangeText={(phone) => this.setState({phone})} placeholder={'Phone Number'}/>
+                <TextInput style={styles.input} onChangeText={(clientName) => this.setState({clientName})} placeholder={'Name'}/>
+                <TextInput style={styles.input} onChangeText={(contactInfo) => this.setState({contactInfo})} placeholder={'Phone Number'}/>
 
-                <Picker selectedValue={this.state.type} style={styles.picker} itemStyle={styles.item}
-                    onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
-                        <Picker.Item label="Student" value="Student" />
-                        <Picker.Item label="Faculty" value="Faculty" />
-                        <Picker.Item label="Staff" value="Staff" />
+                <Picker selectedValue={this.state.clientType} style={styles.picker} itemStyle={styles.item}
+                    onValueChange={(itemValue, itemIndex) => this.setState({clientType: itemValue})}>
+                        <Picker.Item label="Student" value="student" />
+                        <Picker.Item label="Faculty" value="faculty" />
+                        <Picker.Item label="Staff" value="staff" />
                 </Picker>
 
                 <Button title='Add Client' onPress={this._addClient}/>

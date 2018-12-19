@@ -30,10 +30,11 @@ export default class PackageInfoScreen extends React.Component {
         var postHeaders = new Headers(); 
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageInfo.php';
+        var data = {currPackage: this.state.id}
 
         fetch(url, {
             method: 'POST', 
-            body: JSON.stringify(this.state.id),
+            body: JSON.stringify(data),
             headers: postHeaders,
         })
         .then((response) => response.json()) 
@@ -49,7 +50,7 @@ export default class PackageInfoScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>  
-                <Text style={styles.text}>Client: {this.state.package.clientName}</Text>
+                <Text style={styles.contentHeader}>{this.state.package.clientName}</Text>
                 <Text style={styles.text}>Package Type: {this.state.package.type} Sessions</Text>
                 <Text style={styles.text}>Sessions Remaining: {this.state.package.numSessionsLeft}</Text>
                 <Button title='Sessions' onPress={()=>this.props.navigation.navigate('PackageSessions', {id: this.state.id})}/>

@@ -42,8 +42,6 @@ export default class AddTrainerScreen extends React.Component {
             .catch((error) =>{
                 Alert.alert('Error:'+ error);
             }); 
-
-           
         }
        
     }

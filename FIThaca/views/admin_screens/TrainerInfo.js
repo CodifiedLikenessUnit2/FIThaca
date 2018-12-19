@@ -33,10 +33,11 @@ export default class TrainerInfoScreen extends React.Component {
         var postHeaders = new Headers(); 
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetUser.php';
+        var data= {userID: this.state.id};
 
         fetch(url, {
             method: 'POST', 
-            body: JSON.stringify(this.state.id),
+            body: JSON.stringify(data),
             headers: postHeaders,
         })
         .then((response) => response.json()) 
@@ -92,8 +93,7 @@ export default class TrainerInfoScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.contentHeader}>{this.state.name}</Text>
-                <Text style={styles.text}>{this.state.trainer.name}</Text>
+                <Text style={styles.contentHeader}>{this.state.trainer.name}</Text>
                 <Text style={styles.text}>{this.state.trainer.contactInfo}</Text>
                 <Text style={styles.text}>{this.state.trainer.username}</Text>
                 <Text style={styles.contentHeader}>Current Clients:</Text>

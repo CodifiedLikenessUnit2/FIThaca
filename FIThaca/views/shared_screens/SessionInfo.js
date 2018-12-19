@@ -33,7 +33,7 @@ export default class SessionInfoScreen extends React.Component {
         var postHeaders = new Headers(); 
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/sessionInfo.php';
-        var data = {sessionID: this.state.isAdmin}
+        var data = {sessionID: this.state.id}
 
         fetch(url, {
             method: 'POST', 
@@ -57,23 +57,21 @@ export default class SessionInfoScreen extends React.Component {
         if(this.state.isAdmin) {
             return (
                 <View style={styles.container}>  
-                    <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoA', {id: this.state.client})} underlayColor="blue">
-                        <Text>{this.state.session.clientName}</Text>
-                    </TouchableHighlight>
-                    <Text>Time: {this.state.session.time}</Text>
-                    <Text>Status: {this.state.complete}</Text>
+                    <Text style={styles.text}>Client: {this.state.session.clientName}</Text>
+                    <Text style={styles.text}>Trainer: {this.state.session.name}</Text>
+                    <Text style={styles.text}>Time: {this.state.session.time}</Text>
+                    <Text style={styles.text}>Status: {this.state.complete}</Text>
                     <Button title='Related Package' onPress={()=>this.props.navigation.navigate('PackageInfo', {identifier: this.state.package})} underlayColor="blue"/>
                 </View>
             );
         } else /*trainer is logged in*/ {
             return (
                 <View style={styles.container}>  
-                    <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: this.state.client})}>
-                        <Text>{this.state.client}</Text>
-                    </TouchableHighlight>
-                    <Text>Date: {this.state.date}</Text>
-                    <Text>Time: {this.state.time}</Text>
-                    <Text>Status: {this.state.status}</Text>
+                    <Text style={styles.text}>Client: {this.state.client}</Text>
+                    <Text style={styles.text}>Trainer: {this.state.client}</Text>
+                    <Text style={styles.text}>Date: {this.state.date}</Text>
+                    <Text style={styles.text}>Time: {this.state.time}</Text>
+                    <Text style={styles.text}>Status: {this.state.status}</Text>
                     <Button title='Related Package' onPress={()=>this.props.navigation.navigate('PackageInfo', {identifier: this.state.package})}/>
                     <Button title='Edit Session' onPress={()=>this.props.navigation.navigate('EditSession', {identifier: this.state.id, existing: true})}/>
                 </View>
