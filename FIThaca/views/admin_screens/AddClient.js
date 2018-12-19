@@ -12,26 +12,43 @@ export default class AddClientScreen extends React.Component {
         super(props);
 
         this.state = {
-            first: '',
-            last: '',
-            email: '',
+            name: '',
             phone: '',
             type: ''
         }
     }
 
     _addClient = () => {
-        //add client to database
-        Alert.alert("client added");
-        this.props.navigation.navigate('Clients');
+        if (this.state.name == '' || this.state.phone == '' || this.state.type == ''){
+            Alert.alert("Please fill out all fields");
+            return;
+        }
+        else {
+            var postHeaders = new Headers(); 
+            postHeaders.append("Content-Type", "application/json");
+            var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newUser.php';
+    
+            fetch(url, {
+                method: 'POST', 
+                body: JSON.stringify(this.state),
+                headers: postHeaders,
+            })
+            .then((response) => {
+                Alert.alert("Client Added");
+                this.props.navigation.navigate('Clients');
+            })
+            .catch((error) =>{
+                console.error(error); 
+            }); 
+
+           
+        }
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <TextInput style={styles.input} onChangeText={(first) => this.setState({first})} placeholder={'First Name'}/>
-                <TextInput style={styles.input} onChangeText={(last) => this.setState({last})} placeholder={'Last Name'}/>
-                <TextInput style={styles.input} onChangeText={(email) => this.setState({email})} placeholder={'Email Address'}/>
+                <TextInput style={styles.input} onChangeText={(name) => this.setState({name})} placeholder={'Name'}/>
                 <TextInput style={styles.input} onChangeText={(phone) => this.setState({phone})} placeholder={'Phone Number'}/>
 
                 <Picker selectedValue={this.state.type} style={styles.picker} itemStyle={styles.item}
@@ -42,7 +59,6 @@ export default class AddClientScreen extends React.Component {
                 </Picker>
 
                 <Button title='Add Client' onPress={this._addClient}/>
-                <Button title='Cancel' onPress={() => this.props.navigation.navigate('Clients')}/>
             </View>
         );
     }
