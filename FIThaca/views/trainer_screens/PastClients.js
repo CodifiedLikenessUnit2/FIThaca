@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, Button, FlatList, TouchableHighlight, Alert } from 'react-native';
 import styles from '../../styles/styles';
 
 export default class PastClientsScreen extends React.Component {
@@ -8,13 +8,32 @@ export default class PastClientsScreen extends React.Component {
     };
 constructor(props){
     super(props);
-    this.state = {trainers: [
-        {key: '1', name: 'past_client_one'},
-        {key: '2', name: 'past_client_two'},
-        {key: '3', name: 'past_client_three'},
-        {key: '4', name: 'past_client_four'}
-    ]};
+    this.state = {
+        name: 6,
+        isLoading: true,
+    };
 }
+
+componentDidMount(){
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php'
+    var data = {userID: 2};
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: myHeaders
+        })
+        .then((response) => response.json())
+        .then(responseJson => {
+          this.setState({
+            dataSource: responseJson
+          })
+        })
+        .catch(error => Alert.alert('Error:'+ error));
+    }
 
 _updateList = () => {
     //fetch data from database
@@ -24,7 +43,7 @@ _renderItem = data => {
     return (
         <View>
             <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.name})} underlayColor="blue">
-                <Text style={styles.row}>{data.item.name}</Text>
+                <Text style={styles.row}>{data.item.clientID} {data.item.clientName}</Text>
             </TouchableHighlight>
         </View>
     );
@@ -33,7 +52,7 @@ _renderItem = data => {
 render() {
     return (
         <View style={styles.container}>
-           <FlatList data={this.state.trainers} renderItem={this._renderItem}/>
+            <FlatList data={this.state.dataSource} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
         </View>
         );
     }
