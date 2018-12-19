@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableHighlight, FlatList, Button } from 'react-native';
+import { View, Text, TouchableHighlight, FlatList, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -11,35 +11,80 @@ export default class TrainerInfoScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        const name = this.props.navigation.getParam('name', 'NO-NAME');
+        const trainerID = this.props.navigation.getParam('id', 'NO-ID');
 
         //query database for actual trainer information
         this.state = {
-            name: name,
-            type: 'Enter Trainer Name',
-            contact: 'Enter Contact Information',
-            current_package: ' the package identifier',
-            past_packages: [
-                {key: '1', id: 'past_package_identifier'},
-                {key: '2', id: 'past_package_identifier_2'}
-            ]
+            id: trainerID,
+            trainer: {},
+            current_clients: [],
+            past_clients: []
         };
 
         const willFocusSubscription = this.props.navigation.addListener(
             'willFocus',
-            this._updatePackages
+            this._updateClients
         );
     }
 
-    _updatePackages = () => {
+    _updateClients = () => {
         //get packages from database
+
+        var postHeaders = new Headers(); 
+        postHeaders.append("Content-Type", "application/json");
+        var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetUser.php';
+        var data= {userID: this.state.id};
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(data),
+            headers: postHeaders,
+        })
+        .then((response) => response.json()) 
+        .then((responseJson) => {
+            this.setState({ trainer: responseJson[0],}); 
+        })
+        .catch((error) =>{
+            Alert.alert('Error:'+ error);
+        }); 
+
+        url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php';
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(this.state.id),
+            headers: postHeaders,
+        })
+        .then((response) => response.json()) 
+        .then((responseJson) => {
+            this.setState({ current_clients: responseJson,}); 
+        })
+        .catch((error) =>{
+            Alert.alert('Error:'+ error);
+        });  
+        
+        url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php';
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(this.state.id),
+            headers: postHeaders,
+        })
+        .then((response) => response.json()) 
+        .then((responseJson) => {
+            this.setState({ past_clients: responseJson,}); 
+        })
+        .catch((error) =>{
+            Alert.alert('Error:'+ error);
+        });   
+         
     }
 
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: data.item.id})} underlayColor="#EDBB00">
-		            <Text style={styles.row}>{data.item.id}</Text>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('ClientInfoA', {id: data.item.clientID})} underlayColor="#EDBB00">
+		            <Text style={styles.row}>{data.item.clientName}</Text>
 		        </TouchableHighlight>
             </View>
         );
@@ -48,15 +93,13 @@ export default class TrainerInfoScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.contentHeader}>{this.state.name}</Text>
-                <Text style={styles.text}>{this.state.type}</Text>
-                <Text style={styles.text}>{this.state.contact}</Text>
-                <Text style={styles.contentHeader}>Current Package:</Text>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.current_package})} underlayColor="#EDBB00">
-                    <Text>{this.state.current_package}</Text>
-                </TouchableHighlight>
-                <FlatList data={this.state.past_packages} renderItem={this._renderItem}/>
-                <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {trainer: this.state.name})}/>
+                <Text style={styles.contentHeader}>{this.state.trainer.name}</Text>
+                <Text style={styles.text}>{this.state.trainer.contactInfo}</Text>
+                <Text style={styles.text}>{this.state.trainer.username}</Text>
+                <Text style={styles.contentHeader}>Current Clients:</Text>
+                <FlatList data={this.state.current_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
+                <Text style={styles.contentHeader}>Past Clients:</Text>
+                <FlatList data={this.state.past_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
             </View>
         );
     }

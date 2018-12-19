@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableHighlight, Button } from 'react-native';
+import { View, Text, FlatList, TouchableHighlight, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -11,18 +11,14 @@ export default class ClientInfoScreenAdmin extends React.Component {
     constructor(props) {
         super(props);
 
-        const name = this.props.navigation.getParam('name', 'NO-NAME');
+        const clientId = this.props.navigation.getParam('id', 'NO-ID');
 
         //query database for actual client information
         this.state = {
-            name: name,
-            type: 'client_type',
-            contact: 'contact_info',
-            current_package: 'package_identifier',
-            past_packages: [
-                {key: '1', id: 'past_package_identifier'},
-                {key: '2', id: 'past_package_identifier_2'}
-            ]
+            id: clientId,
+            client: {},
+            current_package: {},
+            past_packages: []
         };
 
         const willFocusSubscription = this.props.navigation.addListener(
@@ -33,12 +29,52 @@ export default class ClientInfoScreenAdmin extends React.Component {
 
     _updatePackages = () => {
         //get packages from database
+        var postHeaders = new Headers(); 
+        postHeaders.append("Content-Type", "application/json");
+        var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetClient.php';
+        var data = {clientID: this.state.id};
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(data),
+            headers: postHeaders,
+        })
+        .then((response) => response.json()) 
+        .then((responseJson) => {
+            this.setState({ client: responseJson[0] }); 
+            console.log(this.state.id);
+            console.log(this.state.client);
+
+            if (this.state.client.currPackage == null) {
+                this.setState({ current_package: {type:'No'} });
+                return;
+            }
+
+            url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageInfo.php';
+            var data = {currPackage: this.state.client.currPackage};
+
+            fetch(url, {
+                method: 'POST', 
+                body: JSON.stringify(data),
+                headers: postHeaders,
+            })
+            .then((response) => response.json()) 
+            .then((responseJson) => {
+                this.setState({ current_package: responseJson[0],}); 
+            })
+            .catch((error) =>{
+                Alert.alert('Error:'+ error); 
+            });  
+        })
+        .catch((error) =>{
+            Alert.alert('Error:'+ error);
+        }); 
     }
 
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: data.item.id})} underlayColor="#EDBB00">
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: data.item.clientID})} underlayColor="#EDBB00">
 		            <Text style={styles.row}>{data.item.id}</Text>
 		        </TouchableHighlight>
             </View>
@@ -48,15 +84,16 @@ export default class ClientInfoScreenAdmin extends React.Component {
     render() {
         return (
           <View style={styles.container}>
-              <Text style={styles.contentHeader}>{this.state.name}</Text>
-              <Text style={styles.text}>{this.state.type}</Text>
-              <Text style={styles.text}>{this.state.contact}</Text>
-              <Text style={styles.contentHeader}>Current Package: {'\n'}</Text>
-              <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.current_package})} underlayColor="#EDBB00">
-                  <Text>{this.state.current_package}</Text>
+              <Text style={styles.contentHeader}>{this.state.client.clientName}</Text>
+              <Text style={styles.text}>{this.state.client.clientType}</Text>
+              <Text style={styles.text}>{this.state.client.contactInfo}</Text>
+              
+              <Text style={styles.contentHeader}>Current Package:</Text>
+              <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.client.currPackage})} underlayColor="#EDBB00">
+                  <Text style={styles.text}>{this.state.current_package.type} Sessions</Text>
               </TouchableHighlight>
               <FlatList style={{margin: 20}} data={this.state.past_packages} renderItem={this._renderItem}/>
-              <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {client: this.state.name})}/>
+              <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {client: this.state.client.clientName, id: this.state.id})}/>
           </View>
         );
     }

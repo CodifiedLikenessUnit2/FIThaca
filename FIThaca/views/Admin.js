@@ -7,8 +7,8 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 //import Ionicons from '@expo/vector-icons';
 
 //import screens from other files
-import AdminHomeScreen from './admin_screens/AdminHome';
-import ReportsScreen from './admin_screens/Reports';
+// import AdminHomeScreen from './admin_screens/AdminHome';
+// import ReportsScreen from './admin_screens/Reports';
 
 import TrainerListScreen from './admin_screens/TrainerList';
 import TrainerInfoScreen from './admin_screens/TrainerInfo';
@@ -24,25 +24,24 @@ import PackageSessionsScreen from './shared_screens/PackageSessions';
 import SessionInfoScreen from './shared_screens/SessionInfo';
 
 
-const HomeStack = createStackNavigator(
-    {
-        Home: AdminHomeScreen,
-        Reports: ReportsScreen,
-    },
-    {
-      initialRouteName: 'Home',
-      navigationOptions: {
-          headerStyle: {
-              backgroundColor: '#0F1667',
-          },
-          headerTintColor: '#EDBB00',
-          headerTitleStyle: {
-            fontSize: 29,
-            fontWeight: '300',
-          },
-      },
-    }
-);
+// const HomeStack = createStackNavigator(
+//     { 
+//         Home: AdminHomeScreen,
+//         Reports: ReportsScreen,
+//     },
+//     {
+//         initialRouteName: 'Home',
+//         navigationOptions: {
+//             headerStyle: {
+//                 //backgroundColor: 'blue',
+//             },
+//             headerTintColor: 'blue',
+//             headerTitleStyle: {
+//                 fontWeight: 'bold',
+//             },
+//         },
+//     }
+// );
 
 const TrainerStack = createStackNavigator(
     {
@@ -94,7 +93,7 @@ const ClientStack = createStackNavigator(
 
 export default adminNav = createBottomTabNavigator(
     {
-        Home: HomeStack,
+        //Home: HomeStack,
         Trainers: TrainerStack,
         Clients: ClientStack,
     },
@@ -103,9 +102,9 @@ export default adminNav = createBottomTabNavigator(
         tabBarIcon: ({ focused, tintColor }) => {
             const { routeName } = navigation.state;
             let iconName;
-            if (routeName === 'Home') {
+            /*if (routeName === 'Home') {
                 iconName = `ios-clipboard${focused ? '' : '-outline'}`;
-            } else if (routeName === 'Trainers') {
+            } else*/ if (routeName === 'Trainers') {
                 iconName = `ios-contact${focused ? '' : '-outline'}`;
             } else if (routeName === 'Clients') {
                 iconName = `ios-body${focused ? '' : '-outline'}`;
