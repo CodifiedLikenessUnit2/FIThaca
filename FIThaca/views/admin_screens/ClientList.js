@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableHighlight, Button } from 'react-native';
+import { View, Text, FlatList, TouchableHighlight, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -28,7 +28,7 @@ export default class ClientListScreen extends React.Component {
             this.setState({ clients: responseJson }, function(){}); 
         }) 
         .catch((error) =>{
-            console.error(error); 
+            Alert.alert('Error:'+ error);
         });  
     }
 

@@ -38,7 +38,7 @@ export default class AddClientScreen extends React.Component {
                 this.props.navigation.navigate('Clients');
             })
             .catch((error) =>{
-                console.error(error); 
+                Alert.alert('Error:'+ error);
             }); 
 
            

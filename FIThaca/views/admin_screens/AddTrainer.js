@@ -40,7 +40,7 @@ export default class AddTrainerScreen extends React.Component {
                 this.props.navigation.navigate('Trainers');
             })
             .catch((error) =>{
-                console.error(error); 
+                Alert.alert('Error:'+ error);
             }); 
 
            

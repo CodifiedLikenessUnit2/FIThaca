@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableHighlight, FlatList, Button } from 'react-native';
+import { View, Text, TouchableHighlight, FlatList, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -44,7 +44,7 @@ export default class TrainerInfoScreen extends React.Component {
             this.setState({ trainer: responseJson[0],}); 
         })
         .catch((error) =>{
-            console.error(error); 
+            Alert.alert('Error:'+ error);
         }); 
 
         url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php';
@@ -59,7 +59,7 @@ export default class TrainerInfoScreen extends React.Component {
             this.setState({ current_clients: responseJson,}); 
         })
         .catch((error) =>{
-            console.error(error); 
+            Alert.alert('Error:'+ error);
         });  
         
         url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php';
@@ -74,7 +74,7 @@ export default class TrainerInfoScreen extends React.Component {
             this.setState({ past_clients: responseJson,}); 
         })
         .catch((error) =>{
-            console.error(error); 
+            Alert.alert('Error:'+ error);
         });   
          
     }

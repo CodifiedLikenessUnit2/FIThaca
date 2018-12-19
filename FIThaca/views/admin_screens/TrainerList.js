@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Button, TouchableHighlight } from 'react-native';
+import { View, Text, FlatList, Button, TouchableHighlight, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -28,7 +28,7 @@ export default class TrainerListScreen extends React.Component {
             this.setState({ trainers: responseJson }, function(){}); 
         }) 
         .catch((error) =>{
-            console.error(error); 
+            Alert.alert('Error:'+ error);
         });  
     }
 

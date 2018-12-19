@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, TouchableHighlight } from 'react-native';
+import { View, Text, Button, TouchableHighlight, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -41,7 +41,7 @@ export default class PackageInfoScreen extends React.Component {
             this.setState({ package: responseJson[0] }); 
         })
         .catch((error) =>{
-            console.error(error); 
+            Alert.alert('Error:'+ error);
         }); 
 
     }
@@ -49,10 +49,10 @@ export default class PackageInfoScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>  
-                <Text>Client: {this.state.client}</Text>
-                <Text>Package Type: {this.state.package.type} Sessions Total</Text>
-                <Text>Sessions Remaining: {this.state.package.numSessionsLeft} Sessions Remaining</Text>
-                <Button title='Sessions' onPress={()=>this.props.navigation.navigate('PackageSessions', {package_id: this.identifier})}/>
+                <Text style={styles.text}>Client: {this.state.package.clientName}</Text>
+                <Text style={styles.text}>Package Type: {this.state.package.type} Sessions</Text>
+                <Text style={styles.text}>Sessions Remaining: {this.state.package.numSessionsLeft}</Text>
+                <Button title='Sessions' onPress={()=>this.props.navigation.navigate('PackageSessions', {id: this.state.id})}/>
             </View>
         );
     }

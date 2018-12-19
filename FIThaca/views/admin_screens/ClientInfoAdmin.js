@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableHighlight, Button } from 'react-native';
+import { View, Text, FlatList, TouchableHighlight, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
@@ -56,11 +56,11 @@ export default class ClientInfoScreenAdmin extends React.Component {
                 this.setState({ current_package: responseJson[0],}); 
             })
             .catch((error) =>{
-                console.error(error); 
+                Alert.alert('Error:'+ error); 
             });  
         })
         .catch((error) =>{
-            console.error(error); 
+            Alert.alert('Error:'+ error);
         }); 
 
         
