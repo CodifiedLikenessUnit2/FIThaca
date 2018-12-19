@@ -25,46 +25,48 @@ import SessionInfoScreen from './shared_screens/SessionInfo';
 
 
 const HomeStack = createStackNavigator(
-    { 
+    {
         Home: AdminHomeScreen,
         Reports: ReportsScreen,
     },
     {
-        initialRouteName: 'Home',
-        navigationOptions: {
-            headerStyle: {
-                //backgroundColor: 'blue',
-            },
-            headerTintColor: 'blue',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
+      initialRouteName: 'Home',
+      navigationOptions: {
+          headerStyle: {
+              backgroundColor: '#0F1667',
+          },
+          headerTintColor: '#EDBB00',
+          headerTitleStyle: {
+            fontSize: 29,
+            fontWeight: '300',
+          },
+      },
     }
 );
 
 const TrainerStack = createStackNavigator(
-    { 
+    {
         Trainers: TrainerListScreen,
         TrainerInfo: TrainerInfoScreen,
         AddTrainer: AddTrainerScreen,
     },
     {
-        initialRouteName: 'Trainers',
-        navigationOptions: {
-            headerStyle: {
-                //backgroundColor: 'blue',
-            },
-            headerTintColor: 'blue',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
+      initialRouteName: 'Trainers',
+      navigationOptions: {
+          headerStyle: {
+            backgroundColor: '#0F1667',
+          },
+          headerTintColor: '#EDBB00',
+          headerTitleStyle: {
+              fontSize: 29,
+              fontWeight: '300',
+          },
+      },
     }
   );
 
 const ClientStack = createStackNavigator(
-    { 
+    {
         Clients: ClientListScreen,
         ClientInfoA: ClientInfoScreenAdmin,
         AddClient: AddClientScreen,
@@ -77,11 +79,12 @@ const ClientStack = createStackNavigator(
         initialRouteName: 'Clients',
         navigationOptions: {
             headerStyle: {
-                //backgroundColor: 'blue',
+              backgroundColor: '#0F1667',
             },
-            headerTintColor: 'blue',
+            headerTintColor: '#EDBB00',
             headerTitleStyle: {
-                fontWeight: 'bold',
+                fontSize: 29,
+                fontWeight: '300',
             },
         },
     }
@@ -107,14 +110,15 @@ export default adminNav = createBottomTabNavigator(
             } else if (routeName === 'Clients') {
                 iconName = `ios-body${focused ? '' : '-outline'}`;
             }
-            //return <Ionicons name={iconName} size={25} color={tintColor} /> 
+            //return <Ionicons name={iconName} size={25} color={tintColor} />
             return 'idk why this is not working';
         },
-        
+
         }),
         tabBarOptions: {
-            activeTintColor: 'blue',
-            inactiveTintColor: 'gray',
-        },
+          style: { backgroundColor: '#0F1667' },
+          activeTintColor: '#EDBB00',
+          inactiveTintColor: 'white',
+      },
     }
 );
