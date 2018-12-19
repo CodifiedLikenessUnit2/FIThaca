@@ -20,7 +20,7 @@ import PackageSessionsScreen from './shared_screens/PackageSessions';
 import SessionInfoScreen from './shared_screens/SessionInfo';
 
 const SessionStack = createStackNavigator(
-    { 
+    {
         Home: UpcomingSessionsScreen,
         PastSessions: PastSessionsScreen,
         SessionInfo: SessionInfoScreen,
@@ -30,18 +30,20 @@ const SessionStack = createStackNavigator(
         initialRouteName: 'Home',
         navigationOptions: {
             headerStyle: {
-                //backgroundColor: 'blue',
+                backgroundColor: '#0F1667',
             },
-            headerTintColor: 'blue',
+            headerTintColor: '#EDBB00',
             headerTitleStyle: {
-                fontWeight: 'bold',
+              fontSize: 29,
+              fontWeight: '300',
             },
+            headerMode: 'none',
         },
     }
 );
 
 const ClientStack = createStackNavigator(
-    { 
+    {
         Clients: TrainerClientsScreen,
         PastClients: PastClientsScreen,
         ClientInfoT: ClientInfoScreenTrainer,
@@ -50,16 +52,18 @@ const ClientStack = createStackNavigator(
         PackageSessions: PackageSessionsScreen,
     },
     {
-        initialRouteName: 'Clients',
-        navigationOptions: {
-            headerStyle: {
-                //backgroundColor: 'blue',
-            },
-            headerTintColor: 'blue',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
-        },
+      initialRouteName: 'Clients',
+      navigationOptions: {
+          headerStyle: {
+            backgroundColor: '#0F1667',
+          },
+          headerTintColor: '#EDBB00',
+          headerTitleStyle: {
+              fontSize: 29,
+              fontWeight: '300',
+          },
+          headerMode: 'none',
+      },
     }
 );
 
@@ -77,14 +81,15 @@ export default trainerNav = createBottomTabNavigator (
                 iconName = `ios-calendar${focused ? '' : '-outline'}`;
             } else if (routeName === 'Clients') {
                 iconName = `ios-contact${focused ? '' : '-outline'}`;
-            } 
+            }
             //return <Ionicons name={iconName} size={25} color={tintColor} />;
             return 'idk why this is not working';
         },
         }),
         tabBarOptions: {
-            activeTintColor: 'blue',
-            inactiveTintColor: 'gray',
-        },
+          style: { backgroundColor: '#0F1667' },
+          activeTintColor: '#EDBB00',
+          inactiveTintColor: 'white',
+      },
     }
 );
