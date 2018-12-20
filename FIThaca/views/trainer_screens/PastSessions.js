@@ -40,7 +40,7 @@ export default class PastSessionsScreen extends React.Component {
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.name})} underlayColor="blue">
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.clientID})} underlayColor="blue">
                     <Text style={styles.row}>{data.item.clientName}{'\n'}{data.item.time}</Text>
                 </TouchableHighlight>
             </View>
