@@ -51,6 +51,8 @@ class SignUpScreen extends React.Component {
   }
 }
 */
+
+//This class will give us the main part of the login page
 class LogInScreen extends React.Component {
 
   constructor(props) {
@@ -102,9 +104,13 @@ class LogInScreen extends React.Component {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+ //We coded dummy login accounts in the database to allow for testing with the app, none of them have passwords
 // trainer: arc
 // admin: lincoln
 
+    //This is submitting information to the login query from the database
+    //Typically needs username, password but password not in effect at the moment because of encryption complications
+    //returns userID, isAdmin //(1 = admin, 0 = trainer)
     var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/login.php'
     var data = {username: this.state.username, password: this.state.password};
 
@@ -125,7 +131,8 @@ class LogInScreen extends React.Component {
   _checkUser = () => {
 
     console.log("id: ", this.state.dataSource.userID);
-
+    
+    //this is the part that determines whether the send the user to the admin side or to the trainer side
     if (this.state.dataSource.isAdmin == 0) { // is not admin
       this.props.navigation.navigate('Trainer', {
         userID: this.state.dataSource.userID, // does not work
@@ -139,6 +146,7 @@ class LogInScreen extends React.Component {
 
 }
 
+//Of course, we need to export this
 export default onboardNav = createStackNavigator(
   {
     Home: LogInScreen,
