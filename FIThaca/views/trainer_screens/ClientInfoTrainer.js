@@ -14,6 +14,7 @@ export default class ClientInfoScreenTrainer extends React.Component {
 
         //query database for actual client information
         this.state = {
+            ID: name,
             renderCheck:false,
             isLoading: true,
         };
@@ -24,7 +25,7 @@ export default class ClientInfoScreenTrainer extends React.Component {
         myHeaders.append("Content-Type", "application/json");
     
         const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/trainerGetClient.php'
-        var data = {clientID: 2};
+        var data = {clientID: this.state.ID};
     
         fetch(url, {
             method: 'POST',
