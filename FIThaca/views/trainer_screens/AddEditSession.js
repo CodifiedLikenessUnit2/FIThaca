@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Picker, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Picker, Alert, TextInput, TouchableOpacity } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import styles from '../../styles/styles';
 
@@ -17,7 +17,7 @@ export default class AddEditSessionScreen extends React.Component {
 
         this.state = {
             client: 'session_client',
-            time: 'session_time',
+            time: 'Choose A Time',
             trainer: 'session_trainer',
             complete: false,
 
@@ -41,9 +41,25 @@ export default class AddEditSessionScreen extends React.Component {
     };
 
     _saveSession = () => {
-
-        //add this or save changes to database - we don't have that in here just yet
-
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+        
+            const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newSession.php '
+            var data = {userID: 4};
+        
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: myHeaders
+                })
+                .then((response) => response.json())
+                .then(responseJson => {
+                  this.setState({
+                    dataSource: responseJson
+                  })
+                })
+                .catch(error => Alert.alert('Error:'+ error));
+            
         Alert.alert('session saved');
 
         //MIGHT NEED TO CHANGE IF PEOPLE DON'T LIKE THIS   - possibly add and link to TrainerHome page
@@ -64,19 +80,15 @@ export default class AddEditSessionScreen extends React.Component {
         return (
             <View style={styles.container}>  
 
-                <Text>Client:</Text>
-                //We are probably going to have to tweak this later on. I am envisioning a picker that displays the clients from the database
+                <Text>Choose a Client:</Text>
                 <Picker selectedValue={this.state.client} style={{ height: 20, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
                     onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
-                        <Picker.Item key='1' label="Client A" value="a" />
-                        <Picker.Item key='2' label="Client B" value="b" />
-                        <Picker.Item key='3' label="Client C" value="c" />
-                        <Picker.Item key='4' label="Client D" value="d" />
-                        <Picker.Item key='5' label="Client E" value="e" />
-                        <Picker.Item key='6' label="Client F" value="f" />
+                        <Picker.Item key='1' label="Dwigt Rotugal" value="a" />
+                        <Picker.Item key='2' label="Kenn Kitvarn" value="b" />
+                        <Picker.Item key='3' label="Donny Olerberz" value="c" />
                 </Picker>
 
-                <Text>Time:</Text>
+                <Text>{'\n'}{'\n'}{'\n'}</Text>
                 <TouchableOpacity onPress={this._showDateTimePicker}>
                     <Text>{this.state.time}</Text>
                 </TouchableOpacity>
@@ -86,8 +98,8 @@ export default class AddEditSessionScreen extends React.Component {
                     onCancel={this._hideDateTimePicker}
                     mode='datetime'
                 />
-
-                <Text>Status:</Text>
+                
+                <Text>{'\n'}{'\n'}{'\n'}Status:</Text>
                 <Picker selectedValue={this.state.client} style={{ height: 20, width: 100, margin: 20 }}   itemStyle={{ height: 50 }}
                     onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
                         <Picker.Item key='1' label="Upcoming" value="u" />
