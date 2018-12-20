@@ -30,54 +30,54 @@ export default class TrainerInfoScreen extends React.Component {
     _updateClients = () => {
         //get packages from database
 
-        var postHeaders = new Headers(); 
+        var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetUser.php';
         var data= {userID: this.state.id};
 
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(data),
             headers: postHeaders,
         })
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ trainer: responseJson[0],}); 
+            this.setState({ trainer: responseJson[0],});
         })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        }); 
+        });
 
         url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php';
 
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(this.state.id),
             headers: postHeaders,
         })
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ current_clients: responseJson,}); 
+            this.setState({ current_clients: responseJson,});
         })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        });  
-        
+        });
+
         url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php';
 
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(this.state.id),
             headers: postHeaders,
         })
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ past_clients: responseJson,}); 
+            this.setState({ past_clients: responseJson,});
         })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        });   
-         
+        });
+
     }
 
     _renderItem = data => {
@@ -97,9 +97,9 @@ export default class TrainerInfoScreen extends React.Component {
                 <Text style={styles.text}>{this.state.trainer.contactInfo}</Text>
                 <Text style={styles.text}>{this.state.trainer.username}</Text>
                 <Text style={styles.contentHeader}>Current Clients:</Text>
-                <FlatList data={this.state.current_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
+                <FlatList style={styles.list} data={this.state.current_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
                 <Text style={styles.contentHeader}>Past Clients:</Text>
-                <FlatList data={this.state.past_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
+                <FlatList style={styles.list} data={this.state.past_clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
             </View>
         );
     }

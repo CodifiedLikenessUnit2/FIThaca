@@ -29,19 +29,19 @@ export default class ClientInfoScreenAdmin extends React.Component {
 
     _updatePackages = () => {
         //get packages from database
-        var postHeaders = new Headers(); 
+        var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetClient.php';
         var data = {clientID: this.state.id};
 
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(data),
             headers: postHeaders,
         })
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ client: responseJson[0] }); 
+            this.setState({ client: responseJson[0] });
             console.log(this.state.id);
             console.log(this.state.client);
 
@@ -54,21 +54,21 @@ export default class ClientInfoScreenAdmin extends React.Component {
             var data = {currPackage: this.state.client.currPackage};
 
             fetch(url, {
-                method: 'POST', 
+                method: 'POST',
                 body: JSON.stringify(data),
                 headers: postHeaders,
             })
-            .then((response) => response.json()) 
+            .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({ current_package: responseJson[0],}); 
+                this.setState({ current_package: responseJson[0],});
             })
             .catch((error) =>{
-                Alert.alert('Error:'+ error); 
-            });  
+                Alert.alert('Error:'+ error);
+            });
         })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        }); 
+        });
     }
 
     _renderItem = data => {
@@ -87,12 +87,12 @@ export default class ClientInfoScreenAdmin extends React.Component {
               <Text style={styles.contentHeader}>{this.state.client.clientName}</Text>
               <Text style={styles.text}>{this.state.client.clientType}</Text>
               <Text style={styles.text}>{this.state.client.contactInfo}</Text>
-              
+
               <Text style={styles.contentHeader}>Current Package:</Text>
               <TouchableHighlight onPress={() => this.props.navigation.navigate('PackageInfo', {id: this.state.client.currPackage})} underlayColor="#EDBB00">
                   <Text style={styles.text}>{this.state.current_package.type} Sessions</Text>
               </TouchableHighlight>
-              <FlatList style={{margin: 20}} data={this.state.past_packages} renderItem={this._renderItem}/>
+              <FlatList style={styles.list} data={this.state.past_packages} renderItem={this._renderItem}/>
               <Button title='Add Package' onPress={()=>this.props.navigation.navigate('AddPackage', {client: this.state.client.clientName, id: this.state.id})}/>
           </View>
         );

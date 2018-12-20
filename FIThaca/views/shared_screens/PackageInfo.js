@@ -12,7 +12,7 @@ export default class PackageInfoScreen extends React.Component {
         super(props);
 
         const id = this.props.navigation.getParam('id', 'NO-ID');
-       
+
         //query database for actual package information
         this.state = {
             id: id,
@@ -27,29 +27,29 @@ export default class PackageInfoScreen extends React.Component {
 
     _updatePackages = () => {
         //get packages from database
-        var postHeaders = new Headers(); 
+        var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageInfo.php';
         var data = {currPackage: this.state.id}
 
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(data),
             headers: postHeaders,
         })
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ package: responseJson[0] }); 
+            this.setState({ package: responseJson[0] });
         })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        }); 
+        });
 
     }
 
     render() {
         return (
-            <View style={styles.container}>  
+            <View style={styles.container}>
                 <Text style={styles.contentHeader}>{this.state.package.clientName}</Text>
                 <Text style={styles.text}>Package Type: {this.state.package.type} Sessions</Text>
                 <Text style={styles.text}>Sessions Remaining: {this.state.package.numSessionsLeft}</Text>

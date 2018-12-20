@@ -1,16 +1,12 @@
 import React from 'react';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
-import { View, Text, Button, TextInput, KeyboardAvoidingView } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator, StackNavigator, StackActions, NavigationActions } from 'react-navigation';
+import { View, Text, Button, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
 import styles from '../styles/styles';
 import adminNav from './Admin';
 import trainerNav from './Trainer';
 
+/*
 class SignUpScreen extends React.Component {
-
-  static navigationOptions = {
-      title: 'Sign Up',
-      headerLeft: null,
-  };
 
   render() {
       return (
@@ -54,13 +50,18 @@ class SignUpScreen extends React.Component {
       );
   }
 }
-
+*/
 class LogInScreen extends React.Component {
 
-  static navigationOptions = {
-      title: 'Login',
-      headerLeft: null,
-  };
+  constructor(props) {
+      super(props);
+
+      this.state = {
+        username: '',
+        password: '',
+        dataSource: '',
+      };
+    }
 
   render() {
       return (
@@ -68,54 +69,87 @@ class LogInScreen extends React.Component {
           style={styles.container}
           behavior="padding"
         >
+          <Text style={styles.loginHeader}> Log In</Text>
           <View style={styles.onboardContainer}>
             <Text style={styles.header}>FIThaca</Text>
             <TextInput
             style={styles.input}
+            autoCapitalize='none'
             placeholder='username'
             placeholderTextColor='#777777'
+            onChangeText={(text) => {this.setState({username: text})}}
             />
             <TextInput
             style={styles.input}
+            autoCapitalize='none'
             placeholder='password'
             placeholderTextColor='#777777'
             secureTextEntry={true}
+            onChangeText={(text) => {this.setState({password: text})}}
             />
             <Button
             color='white'
             title="Enter"
-            onPress={() => this.props.navigation.navigate('LoggedIn')}
-            />
-          </View>
-          <View style={{marginTop:30}}>
-            <Button
-            title="I don't have an account"
-            onPress={() => this.props.navigation.navigate('Home')}
+            onPress={this._login}
             />
           </View>
         </KeyboardAvoidingView>
       );
   }
+
+  _login = () => {
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+// trainer: arc
+// admin: lincoln
+
+    var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/login.php'
+    var data = {username: this.state.username, password: this.state.password};
+
+    fetch(url, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data), // data can be `string` or {object}!
+      headers: myHeaders
+    }).then(res => res.json())
+    .then(responseJson => {
+      this.setState({
+        dataSource: responseJson[0],
+      });
+      this._checkUser();
+    })
+    .catch(error => Alert.alert('Error:'+ error));
+  }
+
+  _checkUser = () => {
+
+    console.log("id: ", this.state.dataSource.userID);
+
+    if (this.state.dataSource.isAdmin == 0) { // is not admin
+      this.props.navigation.navigate('Trainer', {
+        userID: this.state.dataSource.userID, // does not work
+      });
+    } else { // is Admin
+      this.props.navigation.navigate('Admin', {
+        userID: this.state.dataSource.userID // does not work
+      });
+    }
+  }
+
 }
 
 export default onboardNav = createStackNavigator(
   {
-    Home: SignUpScreen,
-    Login: LogInScreen,
-    SignedUp: trainerNav,
-    LoggedIn: adminNav,
+    Home: LogInScreen,
+    //Signup: SignUpScreen,
+    Trainer: trainerNav,
+    Admin: adminNav,
   },
   {
     initialRouteName: 'Home',
     navigationOptions: {
-        headerStyle: {
-          backgroundColor: '#0F1667',
-        },
-        headerTintColor: '#EDBB00',
-        headerTitleStyle: {
-          fontSize: 29,
-          fontWeight: '300',
-        },
+      header: null
     },
   }
 );

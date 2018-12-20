@@ -33,13 +33,13 @@ export default class AddPackageScreen extends React.Component {
     _updateList = () => {
         //fetch data from database
         return fetch('http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getAllTrainers.php')
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ trainers: responseJson }, function(){}); 
-        }) 
+            this.setState({ trainers: responseJson }, function(){});
+        })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        });  
+        });
     }
 
     _renderItem = data => {
@@ -57,17 +57,17 @@ export default class AddPackageScreen extends React.Component {
             return;
         }
         else {
-            var postHeaders = new Headers(); 
+            var postHeaders = new Headers();
             postHeaders.append("Content-Type", "application/json");
             var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newPackage.php';
             var data = {type: this.state.type, userID: this.state.userID}
-    
+
             fetch(url, {
-                method: 'POST', 
+                method: 'POST',
                 body: JSON.stringify(data),
                 headers: postHeaders,
             })
-            .then((response) => response.json()) 
+            .then((response) => response.json())
             .then((responseJson) => {
 
                 console.log(responseJson[0]);
@@ -75,9 +75,9 @@ export default class AddPackageScreen extends React.Component {
 
                 var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/theClientToPackageConnection.php';
                 var data = {clientID: this.state.id, packageID: responseJson[0]}
-        
+
                 fetch(url, {
-                    method: 'POST', 
+                    method: 'POST',
                     body: JSON.stringify(data),
                     headers: postHeaders,
                 })
@@ -87,11 +87,11 @@ export default class AddPackageScreen extends React.Component {
                 })
                 .catch((error) =>{
                     Alert.alert('Error:'+ error);
-                }); 
+                });
             })
             .catch((error) =>{
                 Alert.alert('Error:'+ error);
-            }); 
+            });
         }
     }
 
@@ -103,10 +103,10 @@ export default class AddPackageScreen extends React.Component {
                 <TextInput style={styles.input} onChangeText={(type) => this.setState({type})} placeholder={'Number of Sessions'}/>
 
                 <Text style={styles.contentHeader}>Choose Trainer</Text>
-                <FlatList data={this.state.trainers} renderItem={this._renderItem} keyExtractor={({userID}, index) => userID}/>
-                
+                <FlatList style={styles.list} data={this.state.trainers} renderItem={this._renderItem} keyExtractor={({userID}, index) => userID}/>
+
                 <TextInput style={styles.input} onChangeText={(userID) => this.setState({userID})} placeholder={'Trainer ID'}/>
-                
+
                 <Button title='Add Package' onPress={this._addPackage}/>
             </View>
         );

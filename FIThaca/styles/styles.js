@@ -4,9 +4,16 @@ export default styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#FFFFFF',
-      justifyContent: 'center',
+      //justifyContent: 'center',
       alignItems: 'center',
       padding: 42,
+    },
+    loginHeader: {
+      color: '#0F1667',
+      fontSize: 30,
+      textAlign: 'center',
+      marginTop: 30,
+      marginBottom: 75,
     },
     header: {
       color: '#EDBB00',
@@ -38,9 +45,12 @@ export default styles = StyleSheet.create({
       textAlign: 'center',
       marginTop: 10,
       marginBottom: 10,
+      marginLeft: 20,
+      marginRight: 20,
       borderRadius: 5,
       borderColor: 'gray',
       borderWidth: 1,
+      color: 'white'
     },
     onboardContainer: {
       backgroundColor: '#0F1667',
@@ -57,11 +67,21 @@ export default styles = StyleSheet.create({
       fontWeight: '400',
       marginTop: 10,
       marginBottom: 10,
+      textAlign: 'center',
+      height: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    list: {
+      marginLeft: 20,
+      marginRight: 20,
+
     },
     text: {
       fontSize: 17,
       fontWeight: '400',
       marginTop: 10,
+      textAlign: 'center',
     },
     picker: {
       height: 75,
