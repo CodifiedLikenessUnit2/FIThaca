@@ -21,15 +21,16 @@ export default class TrainerListScreen extends React.Component {
     }
 
     _updateList = () => {
+
         //fetch data from database
         return fetch('http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getAllTrainers.php')
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ trainers: responseJson }, function(){}); 
-        }) 
+            this.setState({ trainers: responseJson }, function(){});
+        })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        });  
+        });
     }
 
     _renderItem = data => {
@@ -45,7 +46,7 @@ export default class TrainerListScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <FlatList data={this.state.trainers} renderItem={this._renderItem} keyExtractor={({userID}, index) => userID}/>
+                <FlatList style={styles.list} data={this.state.trainers} renderItem={this._renderItem} keyExtractor={({userID}, index) => userID}/>
                 <Button title='Add Trainer' onPress={()=>this.props.navigation.navigate('AddTrainer')}/>
             </View>
         );

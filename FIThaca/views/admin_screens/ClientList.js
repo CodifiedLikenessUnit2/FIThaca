@@ -23,13 +23,13 @@ export default class ClientListScreen extends React.Component {
     _updateList = () => {
         //fetch data from database
         return fetch('http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getAllClients.php')
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ clients: responseJson }, function(){}); 
-        }) 
+            this.setState({ clients: responseJson }, function(){});
+        })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        });  
+        });
     }
 
     _renderItem = data => {
@@ -45,7 +45,7 @@ export default class ClientListScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <FlatList data={this.state.clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
+                <FlatList style={styles.list} data={this.state.clients} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
                 <Button title='Add Client' onPress={() => this.props.navigation.navigate('AddClient')}/>
             </View>
         );

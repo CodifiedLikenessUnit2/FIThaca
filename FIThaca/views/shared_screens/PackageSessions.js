@@ -27,40 +27,40 @@ export default class PackageSessionsScreen extends React.Component {
 
     _updatePackages = () => {
         //get packages from database
-        var postHeaders = new Headers(); 
+        var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageSessions.php';
         var data = {packageID: this.state.id};
 
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(data),
             headers: postHeaders,
         })
-        .then((response) => response.json()) 
+        .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ sessions: responseJson }); 
+            this.setState({ sessions: responseJson });
         })
         .catch((error) =>{
             Alert.alert('Error:'+ error);
-        }); 
+        });
 
     }
 
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('SessionInfo', {id: data.item.sessionID, admin: true})} underlayColor="blue">
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('SessionInfo', {id: data.item.sessionID, admin: true})} underlayColor="#EDBB00">
 		            <Text style={styles.row}>{data.item.time}</Text>
-		        </TouchableHighlight> 
+		        </TouchableHighlight>
             </View>
         );
     };
 
     render() {
         return (
-            <View style={styles.container}>  
-                <FlatList data={this.state.sessions} renderItem={this._renderItem} keyExtractor={({sessionID}, index) => sessionID}/>
+            <View style={styles.container}>
+                <FlatList style={styles.list} data={this.state.sessions} renderItem={this._renderItem} keyExtractor={({sessionID}, index) => sessionID}/>
             </View>
         );
     }

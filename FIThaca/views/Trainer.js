@@ -22,6 +22,7 @@ import SessionInfoScreen from './shared_screens/SessionInfo';
 const SessionStack = createStackNavigator(
     {
         Home: UpcomingSessionsScreen,
+        ClientInfoT: ClientInfoScreenTrainer,
         PastSessions: PastSessionsScreen,
         SessionInfo: SessionInfoScreen,
         EditSession: AddEditSessionScreen,
