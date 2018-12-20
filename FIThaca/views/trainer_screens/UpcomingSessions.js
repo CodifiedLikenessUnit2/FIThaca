@@ -43,15 +43,11 @@ export default class UpcomingSessionsScreen extends React.Component {
         str=str.slice(0, -3);
                     var time = str.toString();
                     time=time.substring(10);
-                    str=str.slice(0, -5);
-                
-
-
-                    
+                    str=str.slice(0, -5);    
                    
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.clientName})} underlayColor="blue">
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.clientID})} underlayColor="blue">
                     <Text style={styles.row}>{data.item.clientName}                             {str} at {time}</Text>
                 </TouchableHighlight>
             </View>
