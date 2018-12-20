@@ -35,15 +35,12 @@ componentDidMount(){
         .catch(error => Alert.alert('Error:'+ error));
     }
 
-_updateList = () => {
-    //fetch data from database
-}
 
 _renderItem = data => {
     return (
         <View>
             <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.name})} underlayColor="blue">
-                <Text style={styles.row}>{data.item.clientID} {data.item.clientName}</Text>
+                <Text style={styles.row}>{data.item.clientName}</Text>
             </TouchableHighlight>
         </View>
     );
