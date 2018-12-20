@@ -24,7 +24,7 @@ export default class PastClientSessionsScreen extends React.Component {
         myHeaders.append("Content-Type", "application/json");
 
       var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getClientPastSessions.php'
-      var data = {userID: 2, ClientID: name};
+      var data = {userID: 4, ClientID: 4};
 
       fetch(url, {
         method: 'POST', // or 'PUT'
@@ -42,14 +42,7 @@ export default class PastClientSessionsScreen extends React.Component {
     _renderItem = data => {
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: data.item.session, admin: false})} underlayColor="blue">
-                    <Text style={styles.row}>
-
-
-                    //UPDATE THIS PART WHEN SHE ADDS THE THING IN
-                        <Text>{data.item.time}</Text>
-                    </Text>
-                </TouchableHighlight>
+                <Text style={styles.row}>{data.item.clientName}{'\n'}{data.item.time}</Text>
             </View>
         );
     };
@@ -59,8 +52,7 @@ export default class PastClientSessionsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>Past Sessions</Text>
-                <FlatList data={this.state.sessions} renderItem={this._renderItem} keyExtractor={({clientID}, index) => clientID}/>
-                //ensure this key extractor is configured properly
+                <FlatList data={this.state.dataSource} renderItem={this._renderItem} keyExtractor={({time}, index) => time}/>
             </View>
         );
     }
