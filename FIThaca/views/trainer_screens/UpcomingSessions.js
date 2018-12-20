@@ -13,25 +13,46 @@ export default class UpcomingSessionsScreen extends React.Component {
         //and you would grab the client name and time of the session based on that identifier
         //it's kind of a mess right now 
         this.state = {
-            next: 'next_session',
-            sessions: [
-                {key: '1', session: 'session_one'},
-                {key: '2', session: 'session_two'},
-                {key: '3', session: 'session_three'},
-                {key: '4', session: 'session_four'},
-                {key: '5', session: 'session_five'} 
-            ],
+            isLoading: true,
         };
     }
 
+    componentDidMount(){
+        var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getUpcomingSessions.php'
+    var data = {userID: 4};
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: myHeaders
+        })
+        .then((response) => response.json())
+        .then(responseJson => {
+          this.setState({
+            dataSource: responseJson
+          })
+        })
+        .catch(error => Alert.alert('Error:'+ error));
+    }
+
     _renderItem = data => {
+        var str = data.item.time;
+        str=str.slice(0, -3);
+                    var time = str.toString();
+                    time=time.substring(10);
+                    str=str.slice(0, -5);
+                
+
+
+                    
+                   
         return (
             <View>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: data.item.session, admin: false})} underlayColor="blue">
-                    <Text style={styles.row}>
-                        <Text>data.item.client{'\n'}</Text>
-                        <Text>data.item.time</Text>
-                    </Text>
+                <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.clientName})} underlayColor="blue">
+                    <Text style={styles.row}>{data.item.clientName}                             {str} at {time}</Text>
                 </TouchableHighlight>
             </View>
         );
@@ -41,25 +62,13 @@ export default class UpcomingSessionsScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>Home</Text>
-                <Text>Next Session</Text>
-                <TouchableHighlight onPress={()=>this.props.navigation.navigate('SessionInfo', {identifier: this.state.next.session, admin: false})} underlayColor="blue">
-                    <Text style={styles.row}>
-                        <Text>next_session.clientName{'\n'}</Text>
-                        <Text>next_session.time</Text>
-                    </Text>
-                </TouchableHighlight>
 
                 <Text>Upcoming Sessions</Text>
-                <FlatList data={this.state.sessions} renderItem={this._renderItem}/>
+                <FlatList data={this.state.dataSource} renderItem={this._renderItem} keyExtractor={({time}, index) => time}/>
 
                 <Button
                     title="Past Sessions"
                     onPress={() => this.props.navigation.navigate('PastSessions')}
-                />
-
-                <Button
-                    title="Create a New Session"
-                    onPress={() => this.props.navigation.navigate('EditSession')}
                 />
             </View>
         );
