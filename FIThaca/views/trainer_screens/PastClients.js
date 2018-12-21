@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, FlatList, TouchableHighlight, Alert } from 'react-native';
 import styles from '../../styles/styles';
 
+//This will provide a list of clients that the trainer has had previously
 export default class PastClientsScreen extends React.Component {
     static navigationOptions = {
         title: 'Past Clients',
@@ -18,6 +19,9 @@ componentDidMount(){
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    //get list of a trainer’s past clients from the database
+    //needs userID
+    //returns clientID, clientName
     const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php'
     var data = {userID: 2};
 
@@ -35,7 +39,7 @@ componentDidMount(){
         .catch(error => Alert.alert('Error:'+ error));
     }
 
-
+//This allows us to render information from the database
 _renderItem = data => {
     return (
         <View>
