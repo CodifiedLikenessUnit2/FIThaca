@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableHighlight, Button, Alert } from 'react-n
 
 import styles from '../../styles/styles';
 
+//This gives detailed information about an individual client including personal information, their package information, and who's training them
 export default class ClientInfoScreenAdmin extends React.Component {
     static navigationOptions = {
         title: 'Client Info',
@@ -31,6 +32,11 @@ export default class ClientInfoScreenAdmin extends React.Component {
         //get packages from database
         var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
+	    
+	    //get client information from the database
+	    //needs clientID
+	    //returns clientName, contactInfo, clientType, currPackage, time, name
+	    //’name’ refers to the name of the trainer 
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetClient.php';
         var data = {clientID: this.state.id};
 
@@ -50,6 +56,9 @@ export default class ClientInfoScreenAdmin extends React.Component {
                 return;
             }
 
+		//gets package info from the database
+		//needs currPackage
+		//returns clientName, type, numSessionsLeft
             url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageInfo.php';
             var data = {currPackage: this.state.client.currPackage};
 
@@ -71,6 +80,7 @@ export default class ClientInfoScreenAdmin extends React.Component {
         });
     }
 
+    //Allows the flatlist to render information from the database
     _renderItem = data => {
         return (
             <View>
