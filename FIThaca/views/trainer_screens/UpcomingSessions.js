@@ -150,7 +150,7 @@ export default class UpcomingSessionsScreen extends React.Component {
                     onPress={() => this.props.navigation.navigate('PastSessions')}
                 />
                 <Button
-                    title="Add Sessions"
+                    title="Add Session"
                     onPress={() => this.props.navigation.navigate('AddSession')}
                 />
             </View>
