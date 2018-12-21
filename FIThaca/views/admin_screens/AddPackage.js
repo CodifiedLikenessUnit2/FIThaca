@@ -3,6 +3,7 @@ import { View, Text, Picker, Alert, Button, TextInput, FlatList } from 'react-na
 
 import styles from '../../styles/styles';
 
+//Adds a package to the database
 export default class AddPackageScreen extends React.Component {
     static navigationOptions = {
         title: 'Add Package',
@@ -30,8 +31,11 @@ export default class AddPackageScreen extends React.Component {
         );
     }
 
-    _updateList = () => {
         //fetch data from database
+    _updateList = () => {
+	    
+	    //get list of all trainers from the database
+	    //returns userID, name, contactInfo, username
         return fetch('http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getAllTrainers.php')
         .then((response) => response.json())
         .then((responseJson) => {
@@ -42,6 +46,7 @@ export default class AddPackageScreen extends React.Component {
         });
     }
 
+    //renders the list of trainers from the database
     _renderItem = data => {
         return (
             <View>
@@ -50,8 +55,8 @@ export default class AddPackageScreen extends React.Component {
         );
     };
 
-    _addPackage = () => {
         //add package to database
+    _addPackage = () => {
         if (this.state.userID == '' || this.state.type == ''){
             Alert.alert("Please fill out all fields");
             return;
@@ -59,6 +64,11 @@ export default class AddPackageScreen extends React.Component {
         else {
             var postHeaders = new Headers();
             postHeaders.append("Content-Type", "application/json");
+		
+		//new package added to the database
+		//needs type, userID
+		//type is the number of sessions
+		//returns packageID
             var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newPackage.php';
             var data = {type: this.state.type, userID: this.state.userID}
 
@@ -73,6 +83,8 @@ export default class AddPackageScreen extends React.Component {
                 console.log(responseJson[0]);
                 console.log(this.state.id);
 
+		    //connects package to client in the database
+		    //needs clientID, packageID
                 var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/theClientToPackageConnection.php';
                 var data = {clientID: this.state.id, packageID: responseJson[0]}
 
