@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import styles from '../../styles/styles';
 
+//This returns a list of past sessions that the trainer had with a given client
 export default class PastClientSessionsScreen extends React.Component {
     static navigationOptions = {
         title: 'Past Sessions'
@@ -12,9 +13,8 @@ export default class PastClientSessionsScreen extends React.Component {
 
         const name = this.props.navigation.getParam('name', 'NO-NAME');
 
-        //So the thing with this is that this gets all the session history for one client using the database
         this.state = {
-            //lientID: name,
+            userID: name,
             isLoading: true,
         };
     }
@@ -23,6 +23,9 @@ export default class PastClientSessionsScreen extends React.Component {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+	 //get a trainer/admin’s past sessions with a specific client from the database
+	//needs userID, clientID
+	//returns clientName, time
       var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getClientPastSessions.php'
       var data = {userID: 4, ClientID: 4};
 
@@ -39,6 +42,7 @@ export default class PastClientSessionsScreen extends React.Component {
       .catch(error => Alert.alert('Error:'+ error));
       }
 
+	//This is the thing that is needed to render information for the Flatlist
     _renderItem = data => {
         return (
             <View>
