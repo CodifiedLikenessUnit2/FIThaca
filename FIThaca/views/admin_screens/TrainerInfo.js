@@ -3,6 +3,8 @@ import { View, Text, TouchableHighlight, FlatList, Button, Alert } from 'react-n
 
 import styles from '../../styles/styles';
 
+//This screen provides all the key information about the trainer, including their basic information, past clients, and current clients
+//An important note is that when we say "userID" that refers to the trainer id
 export default class TrainerInfoScreen extends React.Component {
     static navigationOptions = {
         title: 'Trainer Info',
@@ -13,7 +15,6 @@ export default class TrainerInfoScreen extends React.Component {
 
         const trainerID = this.props.navigation.getParam('id', 'NO-ID');
 
-        //query database for actual trainer information
         this.state = {
             id: trainerID,
             trainer: {},
@@ -27,11 +28,16 @@ export default class TrainerInfoScreen extends React.Component {
         );
     }
 
-    _updateClients = () => {
         //get packages from database
+    _updateClients = () => {
 
         var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
+	    
+	    
+	//gets trainer info from the database
+	//needs userID (userID is the variable of the trainer identifier)
+	//returns name, contactInfo, username
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/adminGetUser.php';
         var data= {userID: this.state.id};
 
@@ -48,6 +54,9 @@ export default class TrainerInfoScreen extends React.Component {
             Alert.alert('Error:'+ error);
         });
 
+	    //get list of a a trainer’s current clients from the database
+	    //needs userID (again the trainer id)
+	    //returns clientID, clientName
         url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php';
 
         fetch(url, {
@@ -63,6 +72,9 @@ export default class TrainerInfoScreen extends React.Component {
             Alert.alert('Error:'+ error);
         });
 
+	//get list of a trainer’s past clients from the database
+	//needs userID
+	//returns clientID, clientName
         url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php';
 
         fetch(url, {
@@ -80,6 +92,7 @@ export default class TrainerInfoScreen extends React.Component {
 
     }
 
+    //This renders the information from the database
     _renderItem = data => {
         return (
             <View>
