@@ -2,14 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
-//ionicons but it's not working
-//import Ionicons from 'react-native-vector-icons/Ionicons';
-//import Ionicons from '@expo/vector-icons';
-
-//import screens from other files
-// import AdminHomeScreen from './admin_screens/AdminHome';
-// import ReportsScreen from './admin_screens/Reports';
-
+//We are importing all the screens from different files to make this work
 import TrainerListScreen from './admin_screens/TrainerList';
 import TrainerInfoScreen from './admin_screens/TrainerInfo';
 import AddTrainerScreen from './admin_screens/AddTrainer';
@@ -43,6 +36,7 @@ import SessionInfoScreen from './shared_screens/SessionInfo';
 //     }
 // );
 
+//The trainer stack is the main tab on the admin side and will show a list of all the trainers
 const TrainerStack = createStackNavigator(
     {
         Trainers: TrainerListScreen,
@@ -64,6 +58,7 @@ const TrainerStack = createStackNavigator(
     }
   );
 
+//The clientStack will serve as the second tab on the admin side and will show a list of the clients
 const ClientStack = createStackNavigator(
     {
         Clients: ClientListScreen,
@@ -90,7 +85,7 @@ const ClientStack = createStackNavigator(
 );
 
 
-
+//Again, we need to export all this to make it work, so this is the part that uses the above stacks to create the tabs
 export default adminNav = createBottomTabNavigator(
     {
         //Home: HomeStack,
