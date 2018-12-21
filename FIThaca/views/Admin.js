@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+//We have to import from the wierd source to get this thing to work
+import { Ionicons } from '@expo/vector-icons';
 
 //We are importing all the screens from different files to make this work
 import TrainerListScreen from './admin_screens/TrainerList';
@@ -16,27 +18,6 @@ import PackageInfoScreen from './shared_screens/PackageInfo';
 import PackageSessionsScreen from './shared_screens/PackageSessions';
 import SessionInfoScreen from './shared_screens/SessionInfo';
 
-
-// const HomeStack = createStackNavigator(
-//     { 
-//         Home: AdminHomeScreen,
-//         Reports: ReportsScreen,
-//     },
-//     {
-//         initialRouteName: 'Home',
-//         navigationOptions: {
-//             headerStyle: {
-//                 //backgroundColor: 'blue',
-//             },
-//             headerTintColor: 'blue',
-//             headerTitleStyle: {
-//                 fontWeight: 'bold',
-//             },
-//         },
-//     }
-// );
-
-//The trainer stack is the main tab on the admin side and will show a list of all the trainers
 const TrainerStack = createStackNavigator(
     {
         Trainers: TrainerListScreen,
@@ -88,7 +69,6 @@ const ClientStack = createStackNavigator(
 //Again, we need to export all this to make it work, so this is the part that uses the above stacks to create the tabs
 export default adminNav = createBottomTabNavigator(
     {
-        //Home: HomeStack,
         Trainers: TrainerStack,
         Clients: ClientStack,
     },
@@ -104,8 +84,7 @@ export default adminNav = createBottomTabNavigator(
             } else if (routeName === 'Clients') {
                 iconName = `ios-body${focused ? '' : '-outline'}`;
             }
-            //return <Ionicons name={iconName} size={25} color={tintColor} />
-            return 'idk why this is not working';
+            return <Ionicons name={iconName} size={25} color={tintColor} />
         },
 
         }),
