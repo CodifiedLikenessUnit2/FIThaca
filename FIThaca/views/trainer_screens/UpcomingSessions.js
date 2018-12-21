@@ -2,16 +2,14 @@ import React from 'react';
 import { View, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import styles from '../../styles/styles';
 
+//This exports the main stuff here
+//This page gives the upcoming sessions that the Trainer will have, it includes every client they have sessions with
 export default class UpcomingSessionsScreen extends React.Component {
     static navigationOptions = {
         title: 'Sessions',
     };
     constructor(props){
         super(props);
-
-        //this may have to be adjusted based on the database but right now it assumes that the sessions contain session identifiers of some sort
-        //and you would grab the client name and time of the session based on that identifier
-        //it's kind of a mess right now
         this.state = {
             isLoading: true,
         };
@@ -20,7 +18,10 @@ export default class UpcomingSessionsScreen extends React.Component {
     componentDidMount(){
         var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
+        
+    //get a trainer/admin’s upcoming sessions from the database
+    //needs userID
+    //returns clientID, clientName, time
     const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getUpcomingSessions.php'
     var data = {userID: 4};
 
@@ -38,6 +39,7 @@ export default class UpcomingSessionsScreen extends React.Component {
         .catch(error => Alert.alert('Error:'+ error));
     }
 
+//This allows us to render the stuff on the FlatList
     _renderItem = data => {
         var str = data.item.time;
         str=str.slice(0, -3);
