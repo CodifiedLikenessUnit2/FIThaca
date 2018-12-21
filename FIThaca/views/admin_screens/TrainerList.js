@@ -3,6 +3,7 @@ import { View, Text, FlatList, Button, TouchableHighlight, Alert } from 'react-n
 
 import styles from '../../styles/styles';
 
+//This exports a list of the trainers that is displayed in one of the main tabs
 export default class TrainerListScreen extends React.Component {
     static navigationOptions = {
         title: 'Trainers',
@@ -11,8 +12,7 @@ export default class TrainerListScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        //get list from database
-        this.state = {trainers: []};
+	    this.state = {trainers: []};
 
         const willFocusSubscription = this.props.navigation.addListener(
             'willFocus',
@@ -20,9 +20,10 @@ export default class TrainerListScreen extends React.Component {
         );
     }
 
+     //fetch data from database
     _updateList = () => {
-
-        //fetch data from database
+	    //get list of all trainers
+	   //returns userID, name, contactInfo, username
         return fetch('http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getAllTrainers.php')
         .then((response) => response.json())
         .then((responseJson) => {
@@ -33,6 +34,7 @@ export default class TrainerListScreen extends React.Component {
         });
     }
 
+    //This is used to render the information for the Flatlist
     _renderItem = data => {
         return (
             <View>
