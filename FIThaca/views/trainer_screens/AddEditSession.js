@@ -22,7 +22,6 @@ export default class AddSessionScreen extends React.Component {
     //This is the function that would add to the database
     //We didn't include that functionality, because we couldn't figure out a method of keeping a consistent time between mySQL and react
     _saveSession = () => {
-        console.log(this.state.client)
         if(this.state.client!=='' && this.state.chosenDate!==new Date()){
             this.props.navigation.navigate('Home');
             this.setState({complete: true});
