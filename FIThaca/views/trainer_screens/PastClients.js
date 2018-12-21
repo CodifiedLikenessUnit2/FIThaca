@@ -10,7 +10,7 @@ export default class PastClientsScreen extends React.Component {
 constructor(props){
     super(props);
     this.state = {
-        name: 6,
+        name: 4,
         isLoading: true,
     };
 }
@@ -23,7 +23,7 @@ componentDidMount(){
     //needs userID
     //returns clientID, clientName
     const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerPastClients.php'
-    var data = {userID: 2};
+    var data = {userID: this.state.name};
 
     fetch(url, {
         method: 'POST',
