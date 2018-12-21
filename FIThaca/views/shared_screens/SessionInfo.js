@@ -3,6 +3,7 @@ import { View, Text, Button, TouchableHighlight, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
+//This screen gives the user information about sessions
 export default class SessionInfoScreen extends React.Component {
     static navigationOptions = {
         title: 'Session Info',
@@ -28,10 +29,15 @@ export default class SessionInfoScreen extends React.Component {
         );
     }
 
+        //get information from database
     _updatePackages = () => {
-        //get packages from database
         var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
+        
+        //get session information from the database
+        //needs sessionID
+        //returns clientName, name, time, complete
+	    //{0 = not complete, 1 = complete}
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/sessionInfo.php';
         var data = {sessionID: this.state.id}
 
@@ -54,6 +60,7 @@ export default class SessionInfoScreen extends React.Component {
     }
 
     render() {
+        //We check whether or not the user is an admin or a trainer and then give them the most appropriate information
         if(this.state.isAdmin) {
             return (
                 <View style={styles.container}>
