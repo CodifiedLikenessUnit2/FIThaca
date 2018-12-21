@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
+//This is the screen for adding trainers to the database, it helps set up an account for them - the encryption thing has been an issue here
 export default class AddTrainerScreen extends React.Component {
     static navigationOptions = {
         title: 'Add Trainer',
@@ -19,8 +20,8 @@ export default class AddTrainerScreen extends React.Component {
         }
     }
 
-    _addTrainer = () => {
         //add trainer to database
+    _addTrainer = () => {
         if (this.state.name == '' || this.state.contactInfo == '' || this.state.username == '' || this.state.password == ''){
             Alert.alert("Please fill out all fields");
             return;
@@ -28,6 +29,9 @@ export default class AddTrainerScreen extends React.Component {
         else {
             var postHeaders = new Headers(); 
             postHeaders.append("Content-Type", "application/json");
+            
+            //create new user and adds it to the database
+            //needs name, contactInfo, username, password
             var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newUser.php';
     
             fetch(url, {
