@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, Button, FlatList, TouchableHighlight, Alert } from 'react-native';
 import styles from '../../styles/styles';
 
+//This gives a list of all the trainer's clients, it will be the second tab on the trainer side
 export default class TrainerClientsScreen extends React.Component {
     static navigationOptions = {
         title: 'Clients',
     };
 constructor(props){
     super(props);
-    //const name = this.props.navigation.getParam('name', 'NO-NAME');
+    const name = this.props.navigation.getParam('name', 'NO-NAME');
 
    this.state = {
             name: 6,
@@ -20,6 +21,8 @@ constructor(props){
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+      //get list of a a trainer’s current clients from the database
+      //returns clientID, clientName
       var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php'
       var data = {userID: 2};
 
@@ -36,17 +39,7 @@ constructor(props){
       .catch(error => Alert.alert('Error:'+ error));
       }
 
-
-    /** const willFocusSubscription = this.props.navigation.addListener(
-        'willFocus',
-        this._updateList
-    );
-}**/
-
-_updateList = () => {
-    //fetch data from database
-}
-
+//This allows us to render the stuff from the Flatlist
 _renderItem = data => {
     return (
         <View>
