@@ -14,7 +14,7 @@ export default class ClientInfoScreenTrainer extends React.Component {
         const name = this.props.navigation.getParam('name', 'NO-NAME');
 
         this.state = {
-            ID: name,
+            clientID: name,
             renderCheck:false,
             isLoading: true,
         };
@@ -27,8 +27,9 @@ export default class ClientInfoScreenTrainer extends React.Component {
         //get client information from the database
        //needs clientID
         //returns clientName, contactInfo, clientType, time
+            //time was returned to be used as a key for the Flatlist because it needed something unique
         const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/trainerGetClient.php'
-        var data = {clientID: this.state.ID};
+        var data = {clientID: this.state.clientID};
 
         fetch(url, {
             method: 'POST',
@@ -50,8 +51,10 @@ export default class ClientInfoScreenTrainer extends React.Component {
             return (
                 <View>
                     <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.name})} underlayColor="#EDBB00">
-                        <Text style={styles.row}>{data.item.clientID} {data.item.clientName} {'\n'}{data.item.clientType} {'\n'}{data.item.time}</Text>
+                        <Text style={styles.row2}>Contact Name: {data.item.clientName}</Text>
                     </TouchableHighlight>
+                    <Text style={styles.row2}>Client Type: {data.item.clientType}</Text>
+                    <Text style={styles.row3}> Contact Info: {data.item.contactInfo}</Text>
                 </View>
             );
             }

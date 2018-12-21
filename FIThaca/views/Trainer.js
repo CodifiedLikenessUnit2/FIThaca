@@ -1,12 +1,12 @@
 import React from 'react';
+//We had to import Ionicons from a wierd place to get it to work for some reason
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
-
-//ionicons but it's not working
 
 //import screens from other files - again, we used this file system to make the development process better
 import UpcomingSessionsScreen from './trainer_screens/UpcomingSessions';
 import PastSessionsScreen from './trainer_screens/PastSessions';
-import AddEditSessionScreen from './trainer_screens/AddEditSession';
+import AddSessionScreen from './trainer_screens/AddEditSession';
 
 import TrainerClientsScreen from './trainer_screens/TrainerClientList';
 import PastClientsScreen from './trainer_screens/PastClients';
@@ -26,7 +26,7 @@ const SessionStack = createStackNavigator(
         ClientInfoT: ClientInfoScreenTrainer,
         PastSessions: PastSessionsScreen,
         SessionInfo: SessionInfoScreen,
-        EditSession: AddEditSessionScreen,
+        AddSession: AddSessionScreen,
     },
     {
         initialRouteName: 'Home',
@@ -86,8 +86,7 @@ export default trainerNav = createBottomTabNavigator (
             } else if (routeName === 'Clients') {
                 iconName = `ios-contact${focused ? '' : '-outline'}`;
             }
-            //return <Ionicons name={iconName} size={25} color={tintColor} />;
-            return 'idk why this is not working';
+            return <Ionicons name={iconName} size={25} color={tintColor} />;
         },
         }),
         tabBarOptions: {

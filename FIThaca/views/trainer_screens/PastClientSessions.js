@@ -14,7 +14,8 @@ export default class PastClientSessionsScreen extends React.Component {
         const name = this.props.navigation.getParam('name', 'NO-NAME');
 
         this.state = {
-            userID: name,
+            clientID: name,
+            name: 4,
             isLoading: true,
         };
     }
@@ -27,7 +28,7 @@ export default class PastClientSessionsScreen extends React.Component {
 	//needs userID, clientID
 	//returns clientName, time
       var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getClientPastSessions.php'
-      var data = {userID: 4, ClientID: 4};
+      var data = {userID: this.state.name, ClientID: name};
 
       fetch(url, {
         method: 'POST', // or 'PUT'

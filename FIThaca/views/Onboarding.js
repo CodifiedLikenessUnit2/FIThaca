@@ -5,53 +5,6 @@ import styles from '../styles/styles';
 import adminNav from './Admin';
 import trainerNav from './Trainer';
 
-/*
-class SignUpScreen extends React.Component {
-
-  render() {
-      return (
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior="padding"
-        >
-          <View style={styles.onboardContainer}>
-            <Text style={styles.header}>FIThaca</Text>
-            <TextInput
-            style={styles.input}
-            placeholder='username'
-            placeholderTextColor='#777777'
-            />
-            <TextInput
-            style={styles.input}
-            placeholder='password'
-            placeholderTextColor='#777777'
-            secureTextEntry={true}
-            />
-            <TextInput
-            style={styles.input}
-            placeholder='password'
-            placeholderTextColor='#777777'
-            secureTextEntry={true}
-            />
-            <Button
-            color='white'
-            title="Enter"
-            onPress={() => this.props.navigation.navigate('SignedUp')}
-            />
-          </View>
-          <View style={{marginTop:30}}>
-            <Button
-            style={styles.button}
-            title="I have an account"
-            onPress={() => this.props.navigation.navigate('Login')}
-            />
-          </View>
-        </KeyboardAvoidingView>
-      );
-  }
-}
-*/
-
 //This class will give us the main part of the login page
 class LogInScreen extends React.Component {
 
@@ -150,7 +103,6 @@ class LogInScreen extends React.Component {
 export default onboardNav = createStackNavigator(
   {
     Home: LogInScreen,
-    //Signup: SignUpScreen,
     Trainer: trainerNav,
     Admin: adminNav,
   },
