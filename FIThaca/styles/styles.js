@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+//This exports a bunch of different styles that are used all throughout the app
 export default styles = StyleSheet.create({
     container: {
       flex: 1,
