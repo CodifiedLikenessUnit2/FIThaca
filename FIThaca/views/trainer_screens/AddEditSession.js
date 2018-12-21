@@ -1,99 +1,73 @@
 import React from 'react';
-import { View, Text, Button, Picker } from 'react-native';
+import { View, Text, Button, DatePickerIOS, Picker, Alert } from 'react-native';
 import styles from '../../styles/styles';
 
-export default class AddEditSessionScreen extends React.Component {
+//Exports the add Session Screen. This screen is currently only used for adding a new session to the database
+export default class AddSessionScreen extends React.Component {
 
     static navigationOptions = {
-        title: 'Edit Session',
+        title: 'Add Session',
     };
 
     constructor(props){
         super(props);
         this.state = {
-            client: 'session_client',
-            time: 'session_time',
-            trainer: 'session_trainer',
+            client: '',
+            name: 4,
             complete: false,
-
-            //these lists should come from the database
-            trainers: ['trainer_one', 'trainer_two', 'trainer_three'],
-            clients: ['client_one', 'client_two', 'client_three']
+            selecteddate: new Date(),
         }
     }
 
-
+    //This is the function that would add to the database
+    //We didn't include that functionality, because we couldn't figure out a method of keeping a consistent time between mySQL and react
     _saveSession = () => {
-
-        //add this or save changes to database - we don't have that in here just yet
-
-        Alert.alert('session saved');
-
-        //MIGHT NEED TO CHANGE IF PEOPLE DON'T LIKE THIS   - possibly add and link to TrainerHome page
-        this.props.navigation.navigate('UpcomingSessions');
+        console.log(this.state.client)
+        if(this.state.client!=='' && this.state.chosenDate!==new Date()){
+            this.props.navigation.navigate('Home');
+            this.setState({complete: true});
+            Alert.alert('Session Saved');
+            
+        }
+        else{
+            Alert.alert('Session not saved                     Entry incomplete!');
+        }
     }
 
-    setComplete = () => {
-        this.setState({complete: true})
-
-    }
-
-    setInComplete = () => {
-        this.setState({complete: false})
-
-    }
-
-    setDate(newDate) {
-        this.setState({time: newDate})
+    //Changes the date in keeping with the datepicker
+    onDateChange(date) {
+        this.setState({
+          selecteddate: date
+        });
       }
 
     render() {
-
-        // <DatePickerIOS
-        //      date={this.state.chosenDate}
-        //      onDateChange={this.setDate}
-        // />
-
-        let trainers = this.state.trainers.map( (trainer, i) => {
-            return <Picker.Item key={i} value={trainer} label={trainer} />
-        });
-
-        let clients = this.state.clients.map( (client, i) => {
-            return <Picker.Item key={i} value={client} label={client} />
-        });
-
-        // //I hope this is like a real thing
-        // <view>
-        // if(this.state.complete == false){
-        //     <view>
-        //     <text>Session Still Pending</text>
-        //     <Button title='Complete' onPress={()=>this.setComplete}/>
-        //     </view>
-        // }
-        // else{
-        //     <view>
-        //     <text>Session Complete</text>
-        //     <Button title='Set Active Again' onPress={()=>this.setInComplete}/>
-        //     </view>
-        // }
-        // </view>
-
         return (
-            <View style={styles.container}>
-              <Text style={styles.contentHeader}>Session List: {this.state.data}</Text>
+        <View style={styles.container}>
 
-//We are probably going to have to tweak this later on. I am envisioning a picker that displays the clients from the database
+        <View style={styles.container}>
+            <Text style={styles.contentHeader}>Choose a Date: {this.state.data}</Text>
+                <DatePickerIOS
+                    date={this.state.selecteddate}
+                    mode="datetime"
+                    onDateChange={(date) => this.onDateChange(date)}
+                    style={{ height: 100, width: 300 }}
+                />
+                </View>
+                
+              <Text style={styles.contentHeader}>Client List: {this.state.data}</Text>
+
+                //We gave up trying to get this data dynamically from the database, so it's hardcoded in unfortunately
                 <Picker selectedValue={this.state.client} style={styles.picker} itemStyle={styles.item}
-                    onValueChange={(itemValue, itemIndex) => this.setState({type: itemValue})}>
-                        <Picker.Item key='1' label="Trainer A" value="4i" />
-                        <Picker.Item key='2' label="Trainer B" value="7i" />
-                        <Picker.Item key='3' label="Trainer C" value="10i" />
-                        <Picker.Item key='4' label="Trainer D" value="4p" />
-                        <Picker.Item key='5' label="Trainer E" value="7p" />
-                        <Picker.Item key='6' label="Trainer F" value="10p" />
+                    onValueChange={(itemValue, itemIndex) => this.setState({client: itemValue})}>
+                        <Picker.Item key='0' label="Choose a Client" value="" />
+                        <Picker.Item key='1' label="Ben Watson" value="6" />
+                        <Picker.Item key='2' label="Philip DeFranco" value="5" />
+                        <Picker.Item key='3' label="Amy Schumer" value="4" />
+                        <Picker.Item key='4' label="John Bar" value="3" />
+                        <Picker.Item key='5' label="Toby Dragon" value="2" />
+                        <Picker.Item key='6' label="Barry Allen" value="1" />
                 </Picker>
-
-
                 <Button title='Save Session' onPress={this._saveSession}/>
             </View>
         );
