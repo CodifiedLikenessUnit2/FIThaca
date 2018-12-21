@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, TouchableHighlight, FlatList, Alert } from 'react-native';
 import styles from '../../styles/styles';
 
+//This is the thing that gets the trainer information stored in the database about a given client
 export default class ClientInfoScreenTrainer extends React.Component {
     static navigationOptions = {
         title: 'Client Info',
@@ -12,7 +13,6 @@ export default class ClientInfoScreenTrainer extends React.Component {
 
         const name = this.props.navigation.getParam('name', 'NO-NAME');
 
-        //query database for actual client information
         this.state = {
             ID: name,
             renderCheck:false,
@@ -24,6 +24,9 @@ export default class ClientInfoScreenTrainer extends React.Component {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+        //get client information from the database
+       //needs clientID
+        //returns clientName, contactInfo, clientType, time
         const url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/trainerGetClient.php'
         var data = {clientID: this.state.ID};
 
@@ -41,6 +44,7 @@ export default class ClientInfoScreenTrainer extends React.Component {
             .catch(error => Alert.alert('Error:'+ error));
         }
 
+        //This allows the Flatlist to render information
         _renderItem = data => {
             if(this.state.renderCheck==false){
             return (
