@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableHighlight, Button, Alert } from 'react-n
 
 import styles from '../../styles/styles';
 
+//This provides the admin with a list of all the clients taht are currently recieving some kind of service
 export default class ClientListScreen extends React.Component {
     static navigationOptions = {
         title: 'Clients',
@@ -11,7 +12,6 @@ export default class ClientListScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        //get list from database
         this.state = {clients: []};
 
         const willFocusSubscription = this.props.navigation.addListener(
@@ -20,8 +20,10 @@ export default class ClientListScreen extends React.Component {
         );
     }
 
-    _updateList = () => {
         //fetch data from database
+    _updateList = () => {
+	    //get list of all clients from the database 
+	   //returns clientID, clientName
         return fetch('http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getAllClients.php')
         .then((response) => response.json())
         .then((responseJson) => {
@@ -32,6 +34,7 @@ export default class ClientListScreen extends React.Component {
         });
     }
 
+    //Allows the flatlist to render each item
     _renderItem = data => {
         return (
             <View>
