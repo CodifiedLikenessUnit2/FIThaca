@@ -12,7 +12,7 @@ constructor(props){
     const name = this.props.navigation.getParam('name', 'NO-NAME');
 
    this.state = {
-            name: 6,
+            name: 4,
             isLoading: true,
         };
     }
@@ -22,9 +22,10 @@ constructor(props){
         myHeaders.append("Content-Type", "application/json");
 
       //get list of a a trainer’s current clients from the database
+      //needs a userID
       //returns clientID, clientName
       var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/getTrainerClientList.php'
-      var data = {userID: 2};
+      var data = {userID: this.state.name};
 
       fetch(url, {
         method: 'POST', // or 'PUT'
@@ -44,7 +45,7 @@ _renderItem = data => {
     return (
         <View>
             <TouchableHighlight onPress={()=>this.props.navigation.navigate('ClientInfoT', {name: data.item.clientID})} underlayColor="#EDBB00">
-                <Text style={styles.row}>{data.item.clientID} {data.item.clientName}</Text>
+                <Text style={styles.row}>{data.item.clientName}</Text>
             </TouchableHighlight>
         </View>
     );
