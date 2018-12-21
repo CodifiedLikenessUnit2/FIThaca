@@ -120,7 +120,6 @@ export default class UpcomingSessionsScreen extends React.Component {
 //This allows us to render the stuff on the FlatList
     _renderItem = data => {
         var year = data.item.time;
-        console.log(year)
             year=year.slice(0,-15);
         var month = data.item.time;
             month=month.slice(0,-12);
