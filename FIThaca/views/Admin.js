@@ -23,6 +23,11 @@ const TrainerStack = createStackNavigator(
         Trainers: TrainerListScreen,
         TrainerInfo: TrainerInfoScreen,
         AddTrainer: AddTrainerScreen,
+        PackageInfo: PackageInfoScreen,
+        ClientInfoA: ClientInfoScreenAdmin,
+        PackageSessions: PackageSessionsScreen,
+        SessionInfo: SessionInfoScreen,
+        AddPackage: AddPackageScreen,
     },
     {
       initialRouteName: 'Trainers',
