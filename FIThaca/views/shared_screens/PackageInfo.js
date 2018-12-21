@@ -3,6 +3,9 @@ import { View, Text, Button, TouchableHighlight, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
+//This is used only on the admin side. We initially planned to give the trainer access to package information, but then had to change course
+//For now, it's best for the trainer not to control packages, but that could change in the future. For that reason, we didn't want to mess with its location because 
+//This gives the specific details of individual packages
 export default class PackageInfoScreen extends React.Component {
     static navigationOptions = {
         title: 'Package Info',
@@ -24,11 +27,14 @@ export default class PackageInfoScreen extends React.Component {
             this._updatePackages
         );
     };
-
-    _updatePackages = () => {
         //get packages from database
+    _updatePackages = () => {
         var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
+        
+        //gets package info from the database
+        //needs currPackage
+        //returns clientName, type, numSessionsLeft
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageInfo.php';
         var data = {currPackage: this.state.id}
 
