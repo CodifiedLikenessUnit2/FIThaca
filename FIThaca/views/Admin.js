@@ -18,6 +18,7 @@ import PackageInfoScreen from './shared_screens/PackageInfo';
 import PackageSessionsScreen from './shared_screens/PackageSessions';
 import SessionInfoScreen from './shared_screens/SessionInfo';
 
+//The trainer stack will serve as the main tab
 const TrainerStack = createStackNavigator(
     {
         Trainers: TrainerListScreen,
