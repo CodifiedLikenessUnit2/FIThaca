@@ -73,6 +73,23 @@ export default styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    row2: {
+      fontSize: 17,
+      fontWeight: '400',
+      textAlign: 'center',
+      height: 25,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    row3: {
+      fontSize: 17,
+      fontWeight: '400',
+      marginBottom: 10,
+      textAlign: 'center',
+      height: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     list: {
       marginLeft: 20,
       marginRight: 20,
