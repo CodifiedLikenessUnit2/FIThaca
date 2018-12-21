@@ -3,6 +3,7 @@ import { View, Text, TextInput, Picker, Button, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
+//Adds a client to the database
 export default class AddClientScreen extends React.Component {
     static navigationOptions = {
         title: 'Add Client',
@@ -18,6 +19,7 @@ export default class AddClientScreen extends React.Component {
         }
     }
 
+//This is the function that adds the client after the add client button is pressed
     _addClient = () => {
         if (this.state.clientName == '' || this.state.contactInfo == '' || this.state.clientType == ''){
             Alert.alert("Please fill out all fields");
@@ -26,6 +28,11 @@ export default class AddClientScreen extends React.Component {
         else {
             var postHeaders = new Headers(); 
             postHeaders.append("Content-Type", "application/json");
+            
+            //create new client and adds it to the database
+            //needs clientName, contactInfo, clientType, type
+	        //clientType is either student, staff, or faculty
+	        //type is packageID [it isn’t, but i fucked up here]
             var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/newClient.php';
     
             fetch(url, {
