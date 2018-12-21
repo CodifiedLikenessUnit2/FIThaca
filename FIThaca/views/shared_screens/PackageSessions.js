@@ -3,6 +3,8 @@ import { View, Text, FlatList, TouchableHighlight, Alert } from 'react-native';
 
 import styles from '../../styles/styles';
 
+//This is used only on the admin side. We initially planned to give the trainer access to package information, but then had to change course
+//For now, it's best for the trainer not to control packages, but that could change in the future. For that reason, we didn't want to mess with its location because 
 export default class PackageSessionsScreen extends React.Component {
     static navigationOptions = {
         title: 'Package Sessions',
@@ -13,8 +15,7 @@ export default class PackageSessionsScreen extends React.Component {
 
         const id = this.props.navigation.getParam('id', 'NO-ID');
 
-        //get list from database
-        this.state = {
+	this.state = {
             id: id,
             sessions: []
         };
@@ -25,10 +26,14 @@ export default class PackageSessionsScreen extends React.Component {
         );
     }
 
-    _updatePackages = () => {
         //get packages from database
+    _updatePackages = () => {
         var postHeaders = new Headers();
         postHeaders.append("Content-Type", "application/json");
+	    
+	 //get sessions in a specific package from the database
+	//needs packageID
+	//returns clientName, sessionID, time
         var url = 'http://cs-ithaca.eastus.cloudapp.azure.com/~mogrady/fithaca/packageSessions.php';
         var data = {packageID: this.state.id};
 
@@ -47,6 +52,7 @@ export default class PackageSessionsScreen extends React.Component {
 
     }
 
+    //This allows us to render information in the Flatlist
     _renderItem = data => {
         return (
             <View>
